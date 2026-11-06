@@ -35,7 +35,7 @@
     opener=button;
     track('cta_click',kind,button.dataset.placement||'page');
     document.querySelectorAll('.lead-form').forEach(form=>{form.hidden=form.dataset.kind!==kind;});
-    document.getElementById('lead-dialog-title').textContent=kind==='preregistration'?'마스킷 사전예약':'기업 도입 문의';
+    document.getElementById('lead-dialog-title').textContent=kind==='preregistration'?'마스키 사전예약':'기업 도입 문의';
     document.getElementById('lead-dialog-intro').textContent=kind==='preregistration'?'출시 안내와 초기 사용 기회를 이메일로 받아보세요. 사전예약은 무료이며 결제가 발생하지 않습니다.':'도입을 검토 중인 업무와 조직 정보를 남겨주세요. 확인 후 이메일로 연락드리겠습니다.';
     if(!dialog.open)dialog.showModal();
     const first=dialog.querySelector('.lead-form:not([hidden]) input:not([type=hidden])');
