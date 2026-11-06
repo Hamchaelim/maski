@@ -1,0 +1,16 @@
+/* Two short masking passes, then the brand stays still. No document processing. */
+.identity-motion{position:relative;isolation:isolate;width:242px;height:66px;margin:0 auto 15px;overflow:hidden;contain:layout paint}
+.identity-word{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;will-change:clip-path;animation-duration:3.8s;animation-timing-function:cubic-bezier(.65,0,.25,1);animation-iteration-count:2}
+.identity-original{animation-name:maski-brand-wipe;clip-path:inset(0)}
+.identity-original .logo-crop{width:226px}
+.identity-alias{font-family:SUIT,sans-serif;font-weight:900;font-size:51px;line-height:1;letter-spacing:-.065em;color:#e5d4ff;animation-name:maski-alias-wipe;clip-path:inset(0 100% 0 0)}
+.alias-bracket{font-weight:650;font-size:.85em;color:#a96aff;margin:0 5px;transform:translateY(-2px)}
+.alias-number{color:#bd8aff;letter-spacing:-.07em}
+.identity-sweep{position:absolute;inset:3px auto 3px 0;width:29px;border-radius:3px;background:linear-gradient(90deg,#9853ff00,#ac6aff90 55%,#e2c6ff);box-shadow:7px 0 22px #a369ff65;opacity:0;transform:translateX(-35px);animation:maski-light-pass 3.8s cubic-bezier(.65,0,.25,1) 2;pointer-events:none}
+.hero .identity-caption{background:none;border:0;box-shadow:none;padding:0;margin-bottom:22px;font-size:9px;letter-spacing:.13em;color:#927da8}
+.hero .identity-caption::before{display:none}
+@keyframes maski-brand-wipe{0%,22%{clip-path:inset(0)}35%,64%{clip-path:inset(0 0 0 100%)}64.01%{clip-path:inset(0 100% 0 0)}77%,100%{clip-path:inset(0)}}
+@keyframes maski-alias-wipe{0%,22%{clip-path:inset(0 100% 0 0)}35%,64%{clip-path:inset(0)}77%{clip-path:inset(0 0 0 100%)}77.01%,100%{clip-path:inset(0 100% 0 0)}}
+@keyframes maski-light-pass{0%,21%{opacity:0;transform:translateX(-35px)}22%{opacity:1;transform:translateX(-35px)}35%{opacity:1;transform:translateX(250px)}36%,63%{opacity:0;transform:translateX(-35px)}64%{opacity:1;transform:translateX(-35px)}77%{opacity:1;transform:translateX(250px)}78%,100%{opacity:0;transform:translateX(250px)}}
+@media(max-width:600px){.identity-motion{width:202px;height:56px;margin-bottom:13px}.identity-original .logo-crop{width:190px}.identity-alias{font-size:44px}.hero .identity-caption{margin-bottom:20px;font-size:8px}}
+@media(prefers-reduced-motion:reduce){.identity-word,.identity-sweep{animation:none;will-change:auto}.identity-alias,.identity-sweep{display:none}}

@@ -11,6 +11,7 @@
 <link rel="preload" href="assets/fonts/SUIT-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="typography.css?v=1" />
 <link rel="stylesheet" href="premium.css?v=1" />
+<link rel="stylesheet" href="logo-motion.css?v=1" />
 </head>
 <body>
 
@@ -26,7 +27,12 @@
 
     <div class="hero">
       <div class="heroText">
-        <span class="eyebrow">PRIVATE BY DESIGN</span>
+        <div class="identity-motion" role="img" aria-label="마스키 로고가 회사 1이라는 가명으로 바뀌었다가 돌아오는 애니메이션">
+          <span class="identity-word identity-original" aria-hidden="true"><span class="logo-crop"><img src="assets/maski-logo.png" alt="" width="1280" height="1280" /></span></span>
+          <span class="identity-word identity-alias" aria-hidden="true"><span class="alias-bracket">[</span>회사<span class="alias-number">_1</span><span class="alias-bracket">]</span></span>
+          <span class="identity-sweep" aria-hidden="true"></span>
+        </div>
+        <span class="eyebrow identity-caption">PRIVATE BY DESIGN</span>
         <h1 id="headline">원문은 내 컴퓨터에.<br><span class="g">AI에는 가명으로.</span></h1>
         <p class="lead">고객의 이름과 식별정보는 가명으로 바꾸고,<br>금액과 업무의 맥락은 그대로 이어가세요.</p><div class="row"><button class="btn primary" type="button" data-lead-type="preregistration" data-placement="hero">사전예약</button><button class="btn ghost" type="button" data-lead-type="enterprise" data-placement="hero">기업 도입 문의</button></div><a class="flow-link" href="#demo">사용 흐름 먼저 살펴보기 →</a>
       </div>
