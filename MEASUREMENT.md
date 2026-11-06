@@ -20,17 +20,17 @@
 
 메타 광고 연결 URL:
 
-https://hamchaelim.github.io/garigo-demo/?utm_source=meta&utm_campaign=maskit_launch
+https://hamchaelim.github.io/maski/?utm_source=meta&utm_campaign=maski_launch
 
 카카오 링크:
 
-https://hamchaelim.github.io/garigo-demo/?utm_source=kakao&utm_campaign=maskit_launch
+https://hamchaelim.github.io/maski/?utm_source=kakao&utm_campaign=maski_launch
 
 팀 테스트 링크(본 집계 제외):
 
-https://hamchaelim.github.io/garigo-demo/?test=1&utm_source=team&utm_campaign=qa
+https://hamchaelim.github.io/maski/?test=1&utm_source=team&utm_campaign=qa
 
-현재 저장하는 UTM은 source와 campaign입니다. 광고 소재를 구분하려면 campaign 값을 maskit_labor_a, maskit_labor_b 등으로 다르게 지정하세요. URL에는 이름·이메일·전화번호를 넣지 않습니다. Meta Pixel은 연결하지 않았으며, 메타 광고 관리자에서 보는 광고 클릭 수와 이 사이트의 CTA 클릭 수는 서로 다른 지표입니다.
+현재 저장하는 UTM은 source와 campaign입니다. 광고 소재를 구분하려면 campaign 값을 maski_labor_a, maski_labor_b 등으로 다르게 지정하세요. URL에는 이름·이메일·전화번호를 넣지 않습니다. Meta Pixel은 연결하지 않았으며, 메타 광고 관리자에서 보는 광고 클릭 수와 이 사이트의 CTA 클릭 수는 서로 다른 지표입니다.
 
 ## 지표 해석
 

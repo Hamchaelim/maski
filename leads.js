@@ -1,13 +1,13 @@
 'use strict';
 (() => {
-  const config=window.MASKIT_CONFIG||{};
+  const config=window.MASKI_CONFIG||{};
   const key=String(config.publishableKey||'');
   const validUrl=/^https:\/\/[a-z0-9-]+\.supabase\.co$/.test(config.supabaseUrl||'');
   const connected=config.enabled===true&&validUrl&&key.startsWith('sb_publishable_');
   const enabled=connected&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(config.privacyContact||'');
   const uuid=()=>crypto.randomUUID();
   let sessionId=uuid();
-  try {const saved=sessionStorage.getItem('maskit_session');if(saved&&/^[a-f0-9-]{36}$/.test(saved))sessionId=saved;else sessionStorage.setItem('maskit_session',sessionId);}catch{}
+  try {const saved=sessionStorage.getItem('maski_session');if(saved&&/^[a-f0-9-]{36}$/.test(saved))sessionId=saved;else sessionStorage.setItem('maski_session',sessionId);}catch{}
   const params=new URLSearchParams(location.search);
   const tag=value=>String(value||'').replace(/[^\p{L}\p{N}_ .:/-]/gu,'').slice(0,100);
   const source=tag(params.get('utm_source')||params.get('from')||'direct');
@@ -90,6 +90,6 @@
       }
     });
   });
-  window.addEventListener('maskit:workflow',event=>{const step=Number(event.detail?.step);if(Number.isInteger(step)&&step>=0&&step<=3)track('workflow_step',null,`step_${step+1}`);});
+  window.addEventListener('maski:workflow',event=>{const step=Number(event.detail?.step);if(Number.isInteger(step)&&step>=0&&step<=3)track('workflow_step',null,`step_${step+1}`);});
   track('page_view');
 })();

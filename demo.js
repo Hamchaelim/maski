@@ -45,7 +45,7 @@ function render(){
   for(const [id,key] of [['stageLabel','label'],['stageBadge','badge'],['stageTitle','title'],['stageFoot','foot']])get(id).textContent=stage[key];
   markedText(get('stageText'),stage.field?scenario[stage.field]:'이름 · 연락처 · 식별번호는 가명으로\n금액 · 날짜 · 사실관계는 그대로\n\n원문 → 가명 처리 → AI 초안 → 원문 복원\n\n아래 버튼으로 각 단계를 확인하세요.');
   get('advance').textContent=stage.button;
-  window.dispatchEvent(new CustomEvent('maskit:workflow',{detail:{step}}));
+  window.dispatchEvent(new CustomEvent('maski:workflow',{detail:{step}}));
   get('progress').textContent=`${step+1} / 4 단계`;
   document.querySelectorAll('.steps li').forEach((item,i)=>{item.classList.toggle('active',i<=step);if(i===step)item.setAttribute('aria-current','step');else item.removeAttribute('aria-current');});
 }
