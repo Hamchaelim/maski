@@ -24,10 +24,10 @@ const scenarios = {
   }
 };
 const stages = [
-  {label:'아직 외부로 보내지 않은 상태',badge:'시작',title:'먼저, 식별정보를 분리합니다.',field:null,foot:'다음 버튼으로 가명 처리된 내용이 어떻게 달라지는지 확인하세요.',button:'가명 처리 예시 보기'},
-  {label:'AI에 전달할 내용 · 예시',badge:'식별정보 치환',title:'금액과 사실관계는 남깁니다.',field:'masked',foot:'설계상 이 단계까지 원문과 치환표는 사용자 기기에 둡니다. 아래 버튼은 실제 AI를 호출하지 않습니다.',button:'AI 초안 예시 보기'},
-  {label:'가명으로 작성된 답변 · 예시',badge:'미리 작성한 초안',title:'AI는 가명을 기준으로 작성합니다.',field:'answer',foot:'이 답변은 흐름을 설명하기 위해 미리 작성했습니다. 실시간 AI 생성 결과가 아닙니다.',button:'원문 복원 예시 보기'},
-  {label:'사용자 기기에서 복원할 결과 · 예시',badge:'복원 컨셉',title:'초안에는 원래 정보를 되돌립니다.',field:'restored',foot:'치환표를 이용한 자동 복원은 개발·검증 예정 기능입니다. 현재는 준비된 예시를 보여줍니다.',button:'다시 보기'}
+  {label:'아직 외부로 보내지 않은 상태',badge:'시작',title:'먼저, 식별정보를 분리합니다.',field:null,foot:'가명 처리를 눌러 식별정보와 업무 내용을 구분해 확인하세요.',button:'가명 처리'},
+  {label:'가명 처리된 문서',badge:'식별정보 치환',title:'금액과 사실관계는 남깁니다.',field:'masked',foot:'식별정보는 가명으로 바꾸고, 금액과 사실관계는 유지하는 흐름입니다.',button:'초안 확인'},
+  {label:'가명으로 작성된 초안',badge:'초안 확인',title:'AI는 가명을 기준으로 작성합니다.',field:'answer',foot:'가명으로 작성한 초안을 검토한 뒤 원문 복원 단계로 이동하세요.',button:'원문 복원'},
+  {label:'원래 정보로 복원한 초안',badge:'원문 복원',title:'초안에는 원래 정보를 되돌립니다.',field:'restored',foot:'고객 이름과 연락처를 확인하고, 문서의 내용과 표현을 최종 검토하세요.',button:'다시 보기'}
 ];
 let currentCase='labor', step=0;
 const get=id=>document.getElementById(id);
@@ -45,7 +45,7 @@ function render(){
   for(const [id,key] of [['stageLabel','label'],['stageBadge','badge'],['stageTitle','title'],['stageFoot','foot']])get(id).textContent=stage[key];
   markedText(get('stageText'),stage.field?scenario[stage.field]:'이름 · 연락처 · 식별번호는 가명으로\n금액 · 날짜 · 사실관계는 그대로\n\n원문 → 가명 처리 → AI 초안 → 원문 복원\n\n아래 버튼으로 각 단계를 확인하세요.');
   get('advance').textContent=stage.button;
-  get('progress').textContent=`${step+1} / 4 단계 · 가상 자료 시연`;
+  get('progress').textContent=`${step+1} / 4 단계`;
   document.querySelectorAll('.steps li').forEach((item,i)=>{item.classList.toggle('active',i<=step);if(i===step)item.setAttribute('aria-current','step');else item.removeAttribute('aria-current');});
 }
 document.querySelectorAll('[data-case]').forEach(button=>button.addEventListener('click',()=>{

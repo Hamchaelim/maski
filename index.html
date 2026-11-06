@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'; worker-src 'none'" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>가리고 — AI는 쓰고 싶고, 유출은 겁나는 당신에게</title>
-<meta name="description" content="전문직 사무소를 위한 로컬 가명 처리 도구 가리고. 실제 고객 자료 입력 없이 가명 처리·AI 초안·원문 복원 흐름을 가상 예시로 확인하세요." />
+<meta name="description" content="전문직 사무소를 위한 로컬 가명 처리 도구 가리고. 고객 식별정보를 가명으로 바꾸고, 업무 내용은 그대로 이어가는 사용 흐름을 확인하세요." />
 <style>
 :root{
   --bg:#070711; --bg2:#0d0d1a; --panel:rgba(255,255,255,.045); --line:rgba(255,255,255,.10);
@@ -164,9 +164,9 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:26px 0 44px;colo
 
     <div class="hero">
       <div class="heroText">
-        <span class="eyebrow">LOCAL-FIRST · PRODUCT CONCEPT</span>
+        <span class="eyebrow">PRIVATE BY DESIGN</span>
         <h1 id="headline">AI에 보내기 전,<br><span class="g">고객 정보는</span><br>내 컴퓨터에.</h1>
-        <p class="lead">식별정보를 가명으로 바꾸고, AI 초안을 원래 정보로 되돌리는 업무 흐름. 고객 자료를 입력하지 않고 가상 예시로 확인하세요.</p><div class="row"><a class="btn primary" href="#demo">작동 흐름 보기</a><a class="btn ghost" href="#local-principle">로컬 처리 원칙</a></div>
+        <p class="lead">이름과 식별번호는 가명으로, 금액과 사실관계는 그대로. AI로 작성하는 업무에도 고객 정보는 소중하니까.</p><div class="row"><a class="btn primary" href="#demo">가리고 시작하기</a><a class="btn ghost" href="#local-principle">로컬 처리 원칙</a></div>
       </div>
 
       <div class="stack" aria-hidden="true">
@@ -181,40 +181,39 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:26px 0 44px;colo
 
   <div class="trust"><div class="wrap">
 <div class="tcell"><div class="tk">고객 자료 입력</div><div class="tv"><span class="dot"></span>받지 않음</div></div>
-<div class="tcell"><div class="tk">시연 데이터</div><div class="tv">가상 예시만</div></div>
+<div class="tcell"><div class="tk">지원하는 업무 흐름</div><div class="tv">노무 · 세무 · 법률</div></div>
 <div class="tcell"><div class="tk">외부 AI 연결</div><div class="tv">없음</div></div>
-<div class="tcell"><div class="tk">현재 단계</div><div class="tv">제품 컨셉 검증</div></div>
+<div class="tcell"><div class="tk">사용자</div><div class="tv">전문직 사무소</div></div>
 </div></div></section>
 
 <section class="tool" id="demo"><div class="wrap">
 <span class="eyebrow">SEE THE WORKFLOW</span>
 <h2>AI에는 가명으로. 초안에는 원래 정보로.</h2>
-<p class="demo-lead">고객 문서를 보내지 않아도 흐름을 확인할 수 있습니다. 업무 예시를 선택하고 단계를 진행해 보세요.</p>
-<p class="demo-note">제품 컨셉 시연 · 아래 문서와 답변은 미리 작성한 가상 예시입니다. 실제 파일 처리·AI 호출·자동 복원을 실행하지 않습니다.</p>
-<div class="tabs" role="group" aria-label="업무 예시 선택">
+<p class="demo-lead">업무를 선택하고 가명 처리부터 초안 확인, 원문 복원까지 차례로 살펴보세요.</p>
+<div class="tabs" role="group" aria-label="업무 선택">
 <button class="tab on" data-case="labor" aria-pressed="true">노무 · 임금 상담</button>
 <button class="tab" data-case="tax" aria-pressed="false">세무 · 자료 요청</button>
 <button class="tab" data-case="law" aria-pressed="false">법률 · 반환 요청</button>
 </div>
 <ol class="steps" aria-label="처리 흐름"><li class="active">01 원본</li><li>02 가명 처리</li><li>03 AI 초안</li><li>04 원문 복원</li></ol>
 <div class="demo-grid">
-<article class="document-card"><div class="doc-top"><span class="doc-label">내 컴퓨터 · 원본 예시</span><span class="doc-badge">가상 자료</span></div><h3 id="sourceTitle"></h3><pre id="sourceText"></pre><p class="doc-foot">실제 고객 자료를 입력하거나 선택하는 기능은 없습니다.</p></article>
+<article class="document-card"><div class="doc-top"><span class="doc-label">내 컴퓨터 · 원본 문서</span><span class="doc-badge">업무 문서</span></div><h3 id="sourceTitle"></h3><pre id="sourceText"></pre><p class="doc-foot">고객 정보와 금액, 사실관계를 구분해 확인하세요.</p></article>
 <article class="document-card output-card"><div class="doc-top"><span class="doc-label" id="stageLabel"></span><span class="doc-badge" id="stageBadge"></span></div><h3 id="stageTitle"></h3><pre id="stageText" aria-live="polite"></pre><p class="doc-foot" id="stageFoot"></p></article>
 </div>
-<div class="demo-controls"><div><button class="btn primary" id="advance">가명 처리 예시 보기</button><button class="btn ghost" id="restart">처음부터</button></div><p id="progress" role="status"></p></div>
-<div class="capture"><h3>전체 문서 처리와 원문 복원까지</h3><p>실제 제품은 원문과 치환표를 사용자 기기 안에 두는 방식을 목표로 합니다. 파일 형식 지원과 탐지 정확도, 복원 기능은 추가 개발·검증이 필요합니다.</p><span class="doc-badge">파일럿 준비 중 · 현재 가입·결제·다운로드 미제공</span></div>
+<div class="demo-controls"><div><button class="btn primary" id="advance">가명 처리</button><button class="btn ghost" id="restart">처음부터</button></div><p id="progress" role="status"></p></div>
+<div class="capture"><h3>전체 문서 처리와 원문 복원까지</h3><p>고객 식별정보를 구분하고, 가명으로 작성한 초안에 원래 정보를 되돌리는 흐름. 문서 작성의 시작부터 마무리까지 이어집니다.</p><span class="doc-badge">원본 확인 → 가명 처리 → 초안 확인 → 원문 복원</span></div>
 </div></section>
-<section class="how" id="local-principle"><div class="wrap"><h2>웹에서는 흐름만. 원문은 내 기기에.</h2><p class="lead2">지향하는 제품 구조와 현재 시연 범위를 구분해 안내합니다.</p>
-<div class="cards"><div class="c"><div class="n">01 · 제품 설계 원칙</div><h4>원문은 사용자 기기에서 처리</h4><p>고객의 식별정보와 치환표를 외부로 보내지 않는 로컬 처리를 목표로 합니다. 실제 제품의 배포 방식과 보안 검증은 확정 전입니다.</p></div>
+<section class="how" id="local-principle"><div class="wrap"><h2>고객 정보는 신중하게. 업무는 간결하게.</h2><p class="lead2">가리고가 중요하게 생각하는 세 가지 원칙입니다.</p>
+<div class="cards"><div class="c"><div class="n">01 · 제품 설계 원칙</div><h4>원문은 사용자 기기에서 처리</h4><p>고객 식별정보와 치환표는 사용자 기기에 두는 로컬 처리를 설계 원칙으로 삼습니다.</p></div>
 <div class="c"><div class="n">02 · AI에 보내는 단계</div><h4>가명 처리 후 사용자가 검토</h4><p>사용자가 누락 여부와 문서 맥락을 검토한 뒤 가명 처리된 내용만 AI에 전달하는 흐름입니다. 이 페이지는 AI 서비스에 연결되지 않습니다.</p></div>
-<div class="c"><div class="n">03 · 현재 웹페이지</div><h4>고객 자료를 받지 않는 시연</h4><p>파일 선택·텍스트 입력·다운로드 기능 없이, 준비된 예시만 표시합니다. 실제 처리 기능의 정확도나 보안성을 입증하는 시연은 아닙니다.</p></div></div>
+<div class="c"><div class="n">03 · 사용자 확인</div><h4>내용을 확인하고 다음 단계로</h4><p>가명 처리된 문서와 작성된 초안을 단계별로 확인합니다. 외부 AI에 자료를 전달하기 전에는 식별정보의 누락과 문서 맥락을 직접 검토해야 합니다.</p></div></div>
 <details class="faq"><summary>웹에서 파일을 선택하면 반드시 서버에 올라가나요?</summary><p>아닙니다. 파일 선택과 서버 전송은 별개입니다. 브라우저가 기기 안에서 파일을 읽을 수도 있으며, 전송 여부는 코드에 따라 달라집니다. 현재 공개 페이지에서는 그 혼동을 없애기 위해 실제 파일 선택과 텍스트 입력 자체를 제공하지 않습니다.</p></details>
 <details class="faq"><summary>가명 처리하면 모든 자료를 AI에 넣어도 되나요?</summary><p>그렇게 보장할 수 없습니다. 사건 내용과 문맥으로 개인이 식별될 수 있고 탐지 누락도 발생할 수 있으므로, 사용자가 업무상 의무와 이용 조건을 확인해야 합니다.</p></details>
 </div></section>
 <footer>
   <div class="wrap">
-    가상 자료를 사용한 제품 컨셉 시연입니다. 실제 고객 파일·텍스트 입력과 외부 AI 연결은 제공하지 않습니다.<br>
-    가천대학교 코코네스쿨 창업 과정 · 전문직 사무소의 AI 활용 현황 조사 · 연구용 시제품
+    화면은 가상 문서와 미리 작성한 답변으로 사용 흐름을 안내합니다. 실제 파일 처리·AI 호출·자동 복원 서비스는 연결되어 있지 않습니다.<br>
+    가천대학교 코코네스쿨 창업 과정 · 전문직 사무소의 AI 활용 현황 조사 · 드림즈 · 가리고
   </div>
 </footer>
 
