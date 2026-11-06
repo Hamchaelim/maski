@@ -69,7 +69,7 @@
       if(String(data.get('website')||'')){status.textContent='입력 내용을 확인한 뒤 다시 시도해 주세요.';return;}
       const phone=String(data.get('phone')||'').trim().replace(/[\s()-]/g,'');
       if(phone&&!/^\+?[0-9]{8,15}$/.test(phone)){status.textContent='전화번호를 확인해 주세요. 숫자 8~15자리로 입력할 수 있습니다.';return;}
-      if((phone||String(data.get('profession')||'unknown')!=='unknown')&&data.get('optional_consent')!=='on'){status.textContent='전화번호·직군을 남기려면 선택 항목 수집에 동의해 주세요. 선택 항목 없이도 신청할 수 있습니다.';return;}
+      if(phone&&data.get('optional_consent')!=='on'){status.textContent='전화번호를 남기려면 선택 항목 수집에 동의해 주세요. 전화번호 없이도 신청할 수 있습니다.';return;}
       button.disabled=true;status.textContent='신청 내용을 저장하고 있습니다…';status.classList.remove('success');
       track('form_submit_attempt',form.dataset.kind,'form');
       try{
@@ -78,7 +78,7 @@
           p_lead_kind:form.dataset.kind,p_name:String(data.get('name')||'').trim(),
           p_email:String(data.get('email')||'').trim().toLowerCase(),p_phone:phone,
           p_company:String(data.get('company')||'').trim(),p_company_size:String(data.get('company_size')||''),
-          p_profession:String(data.get('profession')||'unknown'),p_consent:data.get('consent')==='on',
+          p_consent:data.get('consent')==='on',
           p_optional_consent:data.get('optional_consent')==='on',p_consent_version:'2026-11-06-v1'
         });
         if(result?.ok!==true)throw new Error('not_saved');

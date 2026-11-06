@@ -90,13 +90,12 @@
 <div class="lead-field"><label for="prereg-name">이름 <span>필수</span></label><input id="prereg-name" name="name" autocomplete="name" required maxlength="50" placeholder="이름을 입력해 주세요" /></div>
 <div class="lead-field"><label for="prereg-email">이메일 <span>필수</span></label><input id="prereg-email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="이메일 주소" /></div>
 <div class="lead-field"><label for="prereg-phone">전화번호 <span>선택</span></label><input id="prereg-phone" name="phone" type="tel" autocomplete="tel" maxlength="24" placeholder="010-0000-0000" /></div>
-<div class="lead-field"><label for="prereg-profession">직군 <span>선택</span></label><select id="prereg-profession" name="profession"><option value="unknown">선택하지 않음</option><option value="labor">노무사</option><option value="tax">세무사</option><option value="law">변호사</option><option value="business">기업 실무자·보안 담당자</option><option value="other">기타</option></select></div>
 
 </div>
 <div class="trap-field" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off" /></label></div>
-<details class="lead-privacy"><summary>개인정보 수집·이용 안내</summary><dl><dt>수집 주체: </dt><dd>마스키 프로젝트 팀 드림즈</dd><dt>목적: </dt><dd>출시 안내 및 초기 사용 기회 안내, 신청한 솔루션 검증 참여 관련 연락</dd><dt>필수 항목: </dt><dd>이름, 이메일</dd><dt>선택 항목: </dt><dd>전화번호, 직군</dd><dt>보유 기간: </dt><dd>수집일로부터 6개월 또는 동의 철회 시까지</dd><dt>동의 거부: </dt><dd>필수 수집 동의를 거부하면 신청할 수 없습니다. 선택 항목을 입력하지 않아도 신청할 수 있습니다.</dd><dt>저장: </dt><dd>신청 정보는 Supabase에 저장됩니다. 고객 업무자료는 수집하지 않습니다.</dd><dt>열람·삭제 문의: </dt><dd data-privacy-contact>연락처 연결 준비 중</dd></dl></details>
+<details class="lead-privacy"><summary>개인정보 수집·이용 안내</summary><dl><dt>수집 주체: </dt><dd>마스키 프로젝트 팀 드림즈</dd><dt>목적: </dt><dd>출시 안내 및 초기 사용 기회 안내, 신청한 솔루션 검증 참여 관련 연락</dd><dt>필수 항목: </dt><dd>이름, 이메일</dd><dt>선택 항목: </dt><dd>전화번호</dd><dt>보유 기간: </dt><dd>수집일로부터 6개월 또는 동의 철회 시까지</dd><dt>동의 거부: </dt><dd>필수 수집 동의를 거부하면 신청할 수 없습니다. 선택 항목을 입력하지 않아도 신청할 수 있습니다.</dd><dt>저장: </dt><dd>신청 정보는 Supabase에 저장됩니다. 고객 업무자료는 수집하지 않습니다.</dd><dt>열람·삭제 문의: </dt><dd data-privacy-contact>연락처 연결 준비 중</dd></dl></details>
 <label class="lead-check"><input type="checkbox" name="consent" required /><span>[필수] 위 필수 항목의 수집·이용에 동의합니다.</span></label>
-<label class="lead-check"><input type="checkbox" name="optional_consent" /><span>[선택] 전화번호·직군 수집·이용에 동의합니다. 선택 항목 없이도 신청할 수 있습니다.</span></label>
+<label class="lead-check"><input type="checkbox" name="optional_consent" /><span>[선택] 전화번호 수집·이용에 동의합니다. 선택 항목 없이도 신청할 수 있습니다.</span></label>
 <button class="btn primary submit-lead" type="submit">무료 사전예약 신청</button>
 </fieldset><p class="lead-status" role="status" aria-live="polite"></p></form><form class="lead-form" data-kind="enterprise" hidden>
 <fieldset>
@@ -104,17 +103,16 @@
 <div class="lead-field"><label for="enterprise-name">이름 <span>필수</span></label><input id="enterprise-name" name="name" autocomplete="name" required maxlength="50" placeholder="이름을 입력해 주세요" /></div>
 <div class="lead-field"><label for="enterprise-email">이메일 <span>필수</span></label><input id="enterprise-email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="이메일 주소" /></div>
 <div class="lead-field"><label for="enterprise-phone">전화번호 <span>선택</span></label><input id="enterprise-phone" name="phone" type="tel" autocomplete="tel" maxlength="24" placeholder="010-0000-0000" /></div>
-<div class="lead-field"><label for="enterprise-profession">직군 <span>선택</span></label><select id="enterprise-profession" name="profession"><option value="unknown">선택하지 않음</option><option value="labor">노무사</option><option value="tax">세무사</option><option value="law">변호사</option><option value="business">기업 실무자·보안 담당자</option><option value="other">기타</option></select></div>
 <div class="lead-field"><label for="enterprise-company">회사·사무소 이름 <span>필수</span></label><input id="enterprise-company" name="company" required maxlength="100" autocomplete="organization" placeholder="회사 또는 사무소명" /></div><div class="lead-field"><label for="enterprise-size">회사 규모 <span>필수</span></label><select id="enterprise-size" name="company_size" required><option value="">회사 규모를 선택해 주세요</option><option value="1-10">1–10명</option><option value="11-50">11–50명</option><option value="51-200">51–200명</option><option value="201-1000">201–1,000명</option><option value="1001+">1,001명 이상</option></select></div>
 </div>
 <div class="trap-field" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off" /></label></div>
-<details class="lead-privacy"><summary>개인정보 수집·이용 안내</summary><dl><dt>수집 주체: </dt><dd>마스키 프로젝트 팀 드림즈</dd><dt>목적: </dt><dd>기업 도입 문의 응대와 도입 검토 상담</dd><dt>필수 항목: </dt><dd>이름, 이메일, 회사·사무소 이름, 회사 규모</dd><dt>선택 항목: </dt><dd>전화번호, 직군</dd><dt>보유 기간: </dt><dd>수집일로부터 6개월 또는 동의 철회 시까지</dd><dt>동의 거부: </dt><dd>필수 수집 동의를 거부하면 신청할 수 없습니다. 선택 항목을 입력하지 않아도 신청할 수 있습니다.</dd><dt>저장: </dt><dd>신청 정보는 Supabase에 저장됩니다. 고객 업무자료는 수집하지 않습니다.</dd><dt>열람·삭제 문의: </dt><dd data-privacy-contact>연락처 연결 준비 중</dd></dl></details>
+<details class="lead-privacy"><summary>개인정보 수집·이용 안내</summary><dl><dt>수집 주체: </dt><dd>마스키 프로젝트 팀 드림즈</dd><dt>목적: </dt><dd>기업 도입 문의 응대와 도입 검토 상담</dd><dt>필수 항목: </dt><dd>이름, 이메일, 회사·사무소 이름, 회사 규모</dd><dt>선택 항목: </dt><dd>전화번호</dd><dt>보유 기간: </dt><dd>수집일로부터 6개월 또는 동의 철회 시까지</dd><dt>동의 거부: </dt><dd>필수 수집 동의를 거부하면 신청할 수 없습니다. 선택 항목을 입력하지 않아도 신청할 수 있습니다.</dd><dt>저장: </dt><dd>신청 정보는 Supabase에 저장됩니다. 고객 업무자료는 수집하지 않습니다.</dd><dt>열람·삭제 문의: </dt><dd data-privacy-contact>연락처 연결 준비 중</dd></dl></details>
 <label class="lead-check"><input type="checkbox" name="consent" required /><span>[필수] 위 필수 항목의 수집·이용에 동의합니다.</span></label>
-<label class="lead-check"><input type="checkbox" name="optional_consent" /><span>[선택] 전화번호·직군 수집·이용에 동의합니다. 선택 항목 없이도 신청할 수 있습니다.</span></label>
+<label class="lead-check"><input type="checkbox" name="optional_consent" /><span>[선택] 전화번호 수집·이용에 동의합니다. 선택 항목 없이도 신청할 수 있습니다.</span></label>
 <button class="btn primary submit-lead" type="submit">기업 도입 문의 보내기</button>
 </fieldset><p class="lead-status" role="status" aria-live="polite"></p></form><p class="measurement-note">관심도 측정을 위해 무작위 세션 ID, 유입 경로, 버튼 클릭·단계 진행·제출 여부를 기록합니다. 이름·이메일·전화번호는 별도 신청 테이블에만 저장됩니다.</p></div></dialog>
 <script src="config.js?v=maski-3"></script>
 <script src="demo.js?v=maski-3"></script>
-<script src="leads.js?v=maski-3"></script>
+<script src="leads.js?v=maski-4"></script>
 </body>
 </html>
