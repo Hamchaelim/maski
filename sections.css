@@ -4,7 +4,9 @@
 .why h2{font-size:clamp(25px,3.1vw,37px);font-weight:650;line-height:1.35;letter-spacing:-.04em;margin:0 0 14px;color:#fff}
 .why-sub{font-size:15px;font-weight:550;color:#d3bff0;margin:0 0 14px;letter-spacing:-.015em}
 .why-lead{font-size:14px;line-height:1.85;color:#968ba7;max-width:620px;margin:0 auto;word-break:keep-all}
-.why-panel{margin:44px 0 0;text-align:left;border:1px solid #ffffff16;border-radius:22px;background:linear-gradient(150deg,#ffffff07,#ffffff01 55%),#0f0a17;padding:34px 34px 28px;box-shadow:inset 0 1px #ffffff08}
+.hero-sub{font-size:16px;font-weight:600;color:#d8c6f3;margin:22px 0 0;letter-spacing:-.015em}
+.hero .hero-lead{max-width:600px;margin-top:12px;word-break:keep-all}
+.why-panel{margin:0;text-align:left;border:1px solid #ffffff16;border-radius:22px;background:linear-gradient(150deg,#ffffff07,#ffffff01 55%),#0f0a17;padding:34px 34px 28px;box-shadow:inset 0 1px #ffffff08}
 .why-panel h3{font-size:21px;font-weight:650;letter-spacing:-.03em;margin:0 0 10px;color:#f4ecff}
 .why-panel-lead{font-size:13px;line-height:1.8;color:#9a8cad;margin:0;word-break:keep-all}
 .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:26px 0 0}
@@ -33,7 +35,9 @@
 .footer-links span{color:#4f465b}
 .lead-intro strong{color:#fff;font-weight:700}
 @media(max-width:760px){
-  .why{padding-top:64px}
+  .why{padding-top:52px}
+  .hero-sub{font-size:14px;margin-top:18px}
+  .hero .hero-lead{margin-top:10px}
   .why h2{font-size:25px;line-height:1.4}
   .why-sub{font-size:14px}.why-lead{font-size:13px}
   .why-panel{padding:26px 20px 22px;margin-top:32px}
