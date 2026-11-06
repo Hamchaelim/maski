@@ -36,7 +36,9 @@
     track('cta_click',kind,button.dataset.placement||'page');
     document.querySelectorAll('.lead-form').forEach(form=>{form.hidden=form.dataset.kind!==kind;});
     document.getElementById('lead-dialog-title').textContent=kind==='preregistration'?'마스키 체험 신청':'기업 도입 문의';
-    document.getElementById('lead-dialog-intro').textContent=kind==='preregistration'?'체험이 열리면 남겨주신 이메일로 가장 먼저 안내드려요. 신청은 무료이며 결제가 발생하지 않습니다.':'도입을 검토 중인 업무와 조직 정보를 남겨주세요. 확인 후 이메일로 연락드리겠습니다.';
+    const intro=document.getElementById('lead-dialog-intro');
+    if(kind==='preregistration')intro.textContent='체험이 열리면 남겨주신 이메일로 가장 먼저 안내드려요. 신청은 무료이며 결제가 발생하지 않습니다.';
+    else{const strong=document.createElement('strong');strong.textContent='영업일 기준 1일 이내';intro.replaceChildren('도입을 검토 중인 업무와 조직 정보를 남겨주세요. MASKI 담당자가 ',strong,' 이메일로 연락드리겠습니다.');}
     if(!dialog.open)dialog.showModal();
     const first=dialog.querySelector('.lead-form:not([hidden]) input:not([type=hidden])');
     if(enabled)first?.focus();
@@ -77,8 +79,8 @@
       if(phone&&data.get('optional_consent')!=='on'){status.textContent='전화번호를 남기려면 선택 항목 수집에 동의해 주세요. 전화번호 없이도 신청할 수 있습니다.';return;}
       const professionValue=String(data.get('profession')||'');
       const professionOther=String(data.get('profession_other')||'').trim();
-      if(form.dataset.kind==='preregistration'&&!professionValue){status.textContent='직군을 선택해 주세요.';return;}
       if(professionValue==='other'&&!professionOther){status.textContent='기타 직군을 직접 입력해 주세요.';otherInput?.focus();return;}
+      if(professionValue&&data.get('optional_consent')!=='on'){status.textContent='직군을 남기려면 선택 항목 수집에 동의해 주세요. 직군 없이도 신청할 수 있습니다.';return;}
       button.disabled=true;status.textContent='신청 내용을 저장하고 있습니다…';status.classList.remove('success');
       track('form_submit_attempt',form.dataset.kind,'form');
       try{
@@ -87,10 +89,10 @@
           p_lead_kind:form.dataset.kind,p_name:String(data.get('name')||'').trim(),
           p_email:String(data.get('email')||'').trim().toLowerCase(),p_phone:phone,
           p_company:String(data.get('company')||'').trim(),p_company_size:String(data.get('company_size')||''),
-          p_profession:form.dataset.kind==='preregistration'?professionValue:'unknown',
+          p_profession:form.dataset.kind==='preregistration'&&professionValue?professionValue:'unknown',
           p_profession_other:professionValue==='other'?professionOther:'',
           p_consent:data.get('consent')==='on',
-          p_optional_consent:data.get('optional_consent')==='on',p_consent_version:'2026-11-06-v2'
+          p_optional_consent:data.get('optional_consent')==='on',p_consent_version:'2026-11-06-v3'
         });
         if(result?.ok!==true)throw new Error('not_saved');
         status.classList.add('success');status.textContent=form.dataset.kind==='preregistration'?'체험 신청이 접수되었습니다. 체험이 열리면 남겨주신 이메일로 안내드리겠습니다.':'기업 도입 문의가 접수되었습니다. 확인 후 이메일로 연락드리겠습니다.';

@@ -3,5 +3,5 @@ window.MASKI_CONFIG = Object.freeze({
   enabled: true,
   supabaseUrl: 'https://iizulggosuijcygfbivp.supabase.co',
   publishableKey: 'sb_publishable_8cWRzuq_ry_XsWh3IWaN5A_XViluv8j',
-  privacyContact: 'co9kei6@gachon.ac.kr'
+  privacyContact: 'seongsunam@gachon.ac.kr'
 });

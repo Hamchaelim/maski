@@ -6,12 +6,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>마스키 MASKI — 고객 정보는 지키고, AI 업무는 간편하게</title>
 <meta name="description" content="전문직 사무소를 위한 로컬 가명 처리 도구 마스키. 고객 식별정보를 가명으로 바꾸고, 업무 내용은 그대로 이어가는 사용 흐름을 확인하세요." />
-<link rel="stylesheet" href="leads.css?v=2" />
+<link rel="stylesheet" href="leads.css?v=3" />
 <meta name="theme-color" content="#08050e" />
 <link rel="preload" href="assets/fonts/SUIT-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="typography.css?v=1" />
 <link rel="stylesheet" href="premium.css?v=1" />
 <link rel="stylesheet" href="logo-motion.css?v=1" />
+<link rel="stylesheet" href="sections.css?v=1" />
 </head>
 <body>
 
@@ -57,6 +58,23 @@
 <div class="tcell"><div class="tk">사용자</div><div class="tv">전문직 사무소</div></div>
 </div></div></section>
 
+<section class="why" id="why" aria-labelledby="why-title"><div class="wrap">
+<span class="eyebrow">BEFORE YOU USE AI</span>
+<h2 id="why-title">AI에 문서를 넣기 전, 고객정보부터 확인하세요.</h2>
+<p class="why-sub">계약서, 상담기록, 임금자료, 거래 증빙까지.</p>
+<p class="why-lead">전문직의 업무 문서에는 AI가 처리해야 할 내용과 외부에 공개할 필요가 없는 고객정보가 함께 담겨 있습니다. MASKI는 이러한 정보를 구분하고, 업무에 필요한 맥락은 유지하는 문서 가명처리 방식을 제시합니다.</p>
+<div class="why-panel">
+<h3>업무 문서, AI에 그대로 넣어도 될까요?</h3>
+<p class="why-panel-lead">업무에 필요한 내용을 유지하면서 고객 식별정보는 구분해야 하는 상황을 가상의 문서로 확인해 보세요.</p>
+<div class="why-grid">
+<div class="why-card"><svg class="why-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M7 21h10M4 7h16M6 7l-3 6a3 3 0 0 0 6 0L6 7Zm12 0-3 6a3 3 0 0 0 6 0l-3-6Z"/></svg><h4>법률 업무</h4><p class="why-docs">계약서 · 사건 경위서 · 내용증명 초안</p><p class="why-ids">의뢰인, 상대방, 관계자의 이름과 연락처</p></div>
+<div class="why-card"><svg class="why-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.2A5 5 0 0 1 21 19"/></svg><h4>노무 업무</h4><p class="why-docs">상담기록 · 진술서 · 임금자료</p><p class="why-ids">근로자, 신고인, 피신고인의 식별정보</p></div>
+<div class="why-card"><svg class="why-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg><h4>세무 업무</h4><p class="why-docs">거래자료 · 급여대장 · 증빙내역</p><p class="why-ids">사업자정보, 계좌번호, 거래처 담당자 정보</p></div>
+</div>
+<p class="why-note">업무별 구성 예시이며, 실제 탐지 범위나 지원 파일 형식을 나타내지는 않습니다.</p>
+</div>
+</div></section>
+
 <section class="tool" id="demo"><div class="wrap">
 <span class="eyebrow">SEE THE WORKFLOW</span>
 <h2>AI에는 가명으로. 초안에는 원래 정보로.</h2>
@@ -72,21 +90,29 @@
 <article class="document-card output-card"><div class="doc-top"><span class="doc-label" id="stageLabel"></span><span class="doc-badge" id="stageBadge"></span></div><h3 id="stageTitle"></h3><pre id="stageText" aria-live="polite"></pre><p class="doc-foot" id="stageFoot"></p></article>
 </div>
 <div class="demo-controls"><div><button class="btn primary" id="advance">가명 처리</button><button class="btn ghost" id="restart">처음부터</button></div><p id="progress" role="status"></p></div>
-<div class="capture"><h3>전체 문서 처리와 원문 복원까지</h3><p>고객 식별정보를 구분하고, 가명으로 작성한 초안에 원래 정보를 되돌리는 흐름. 문서 작성의 시작부터 마무리까지 이어집니다.</p><span class="doc-badge">원본 확인 → 가명 처리 → 초안 확인 → 원문 복원</span><div class="lead-actions"><button class="btn primary" type="button" data-lead-type="preregistration" data-placement="bottom">체험하기</button><button class="btn ghost" type="button" data-lead-type="enterprise" data-placement="bottom">기업 도입 문의</button></div><p class="signup-note">출시 전 체험 신청과 기업 도입 상담을 받고 있습니다. 신청은 무료이며 결제가 발생하지 않습니다.</p></div>
+<div class="capture paths"><h3>개인의 업무부터 사무소 도입 검토까지</h3>
+<div class="path-grid">
+<div class="path"><svg class="path-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg><h4>개인 실무자</h4><p>법률·노무·세무 문서에서 식별정보가 어떻게 구분되는지 확인해 보세요.</p><a class="btn light" href="#demo">샘플 문서 확인하기</a></div>
+<div class="path"><svg class="path-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V6l7-3v17M11 20V9l9 3v8M3 20h18M7 9h1M7 13h1M7 17h1M14 14h3M14 17h3"/></svg><h4>사무소·기업 담당자</h4><p>조직에서 사용하는 문서 종류와 AI 활용 환경에 맞춰 적용 가능 범위를 상담해 보세요.</p><button class="btn ghost" type="button" data-lead-type="enterprise" data-placement="bottom">도입 문의하기</button></div>
+</div></div>
 </div></section>
 <section class="how" id="local-principle"><div class="wrap"><h2>고객 정보는 신중하게. 업무는 간결하게.</h2><p class="lead2">마스키가 중요하게 생각하는 세 가지 원칙입니다.</p>
 <div class="cards"><div class="c"><div class="n">01 · 제품 설계 원칙</div><h4>원문은 사용자 기기에서 처리</h4><p>고객 식별정보와 치환표는 사용자 기기에 두는 로컬 처리를 설계 원칙으로 삼습니다.</p></div>
 <div class="c"><div class="n">02 · AI에 보내는 단계</div><h4>가명 처리 후 사용자가 검토</h4><p>사용자가 누락 여부와 문서 맥락을 검토한 뒤 가명 처리된 내용만 AI에 전달하는 흐름입니다. 이 페이지는 AI 서비스에 연결되지 않습니다.</p></div>
 <div class="c"><div class="n">03 · 사용자 확인</div><h4>내용을 확인하고 다음 단계로</h4><p>가명 처리된 문서와 작성된 초안을 단계별로 확인합니다. 외부 AI에 자료를 전달하기 전에는 식별정보의 누락과 문서 맥락을 직접 검토해야 합니다.</p></div></div>
-<details class="faq"><summary>웹에서 파일을 선택하면 반드시 서버에 올라가나요?</summary><p>아닙니다. 파일 선택과 서버 전송은 별개입니다. 브라우저가 기기 안에서 파일을 읽을 수도 있으며, 전송 여부는 코드에 따라 달라집니다. 현재 공개 페이지에서는 그 혼동을 없애기 위해 실제 파일 선택과 텍스트 입력 자체를 제공하지 않습니다.</p></details>
-<details class="faq"><summary>가명 처리하면 모든 자료를 AI에 넣어도 되나요?</summary><p>그렇게 보장할 수 없습니다. 사건 내용과 문맥으로 개인이 식별될 수 있고 탐지 누락도 발생할 수 있으므로, 사용자가 업무상 의무와 이용 조건을 확인해야 합니다.</p></details>
+<h3 class="faq-title">자주 묻는 질문</h3>
+<details class="faq"><summary>고객 이름만 가리면 모든 문서를 AI에 입력해도 되나요?</summary><p>아닙니다. 가명처리 이후에도 사건 내용이나 거래관계 등으로 개인이나 조직이 식별될 수 있습니다. 외부 AI 이용 전에는 해당 업무의 비밀유지 의무와 이용 조건을 별도로 확인해야 합니다.</p></details>
+<details class="faq"><summary>실제 고객 문서를 업로드해 체험할 수 있나요?</summary><p>현재 공개된 체험 화면에서는 가상 문서를 통해 처리 흐름을 확인할 수 있으며, 실제 고객 문서 업로드는 제공하지 않습니다.</p></details>
+<details class="faq"><summary>사무소 전체에서 사용하는 방법도 상담할 수 있나요?</summary><p>네. 조직의 인원, 사용하는 문서 종류, AI 활용 환경을 알려주시면 적용 가능 범위에 관해 상담할 수 있습니다.</p></details>
+<details class="faq"><summary>로컬 처리는 어떻게 확인할 수 있나요?</summary><p>실제 데이터 처리 범위를 확인하려면 네트워크 통신, 원본 문서의 저장 위치, 식별정보 매핑표의 관리 방법 등을 검증해야 합니다. MASKI의 시연 화면만으로 실제 제품의 보안 성능을 증명할 수는 없습니다.</p></details>
 </div></section>
 <footer>
   <div class="wrap">
     <span class="logo-crop footer-logo"><img src="assets/maski-logo.png" alt="MASKI" width="1280" height="1280" loading="lazy" /></span>
-    <div class="footer-name">마스키 · 전문직 사무소를 위한 문서 가명 처리</div>
-    화면은 가상 문서와 미리 작성한 답변으로 사용 흐름을 안내합니다. 실제 파일 처리·AI 호출·자동 복원 서비스는 연결되어 있지 않습니다. 체험 신청·문의 연락처는 신청자가 동의한 경우 별도로 수집합니다.<br>
-    가천대학교 코코네스쿨 창업 과정 · 전문직 사무소의 AI 활용 현황 조사 · 드림즈 · 마스키<a class="privacy-link" href="privacy.html">개인정보 수집·이용 및 측정 안내</a>
+    <div class="footer-name">마스키 MASKI · 고객정보 보호를 위한 문서 가명처리</div>
+    <p class="footer-desc">노무·세무·법률 업무를 재현한 가상 문서로 가명처리부터 AI 초안 작성, 원문 복원까지의 흐름을 확인할 수 있습니다. 현재 제공되는 체험은 미리 구성된 시연이며, 실제 문서 자동 처리나 외부 AI 연동 기능은 포함되지 않습니다. 체험 신청 및 기업 도입 문의를 위해 제공한 개인정보는 동의받은 목적에 한해 수집·이용합니다.</p>
+    <p class="footer-biz">상호 MASKI · 주소 경기 성남시 수정구 성남대로 1342 AI관 6층 · 이메일 <a href="mailto:seongsunam@gachon.ac.kr">seongsunam@gachon.ac.kr</a> · 대표 남성수 · 전화 <a href="tel:010-2121-9353">010-2121-9353</a></p>
+    <nav class="footer-links" aria-label="안내 문서"><a href="terms.html">서비스 이용 안내</a><span aria-hidden="true">/</span><a href="privacy.html">개인정보 수집·이용 및 측정 안내</a></nav>
   </div>
 </footer>
 
@@ -95,15 +121,15 @@
 <div class="lead-fields">
 <div class="lead-field"><label for="prereg-name">이름 <span>필수</span></label><input id="prereg-name" name="name" autocomplete="name" required maxlength="50" placeholder="이름을 입력해 주세요" /></div>
 <div class="lead-field"><label for="prereg-email">이메일 <span>필수</span></label><input id="prereg-email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="이메일 주소" /></div>
-<div class="lead-field"><label for="prereg-profession">직군 <span>필수</span></label><select id="prereg-profession" name="profession" required><option value="">직군을 선택해 주세요</option><option value="tax">세무사</option><option value="labor">노무사</option><option value="law">변호사</option><option value="accounting">회계사</option><option value="office_staff">전문직 사무소 직원</option><option value="employee">회사원</option><option value="student">학생</option><option value="other">기타 (직접 입력)</option></select></div>
-<div class="lead-field" id="prereg-other-field" hidden><label for="prereg-profession-other">기타 직군 <span>필수</span></label><input id="prereg-profession-other" name="profession_other" maxlength="50" placeholder="예: 프리랜서, 공무원" /></div>
+<div class="lead-field"><label for="prereg-profession">직군 <span>선택</span></label><select id="prereg-profession" name="profession"><option value="">직군을 선택해 주세요</option><option value="tax">세무사</option><option value="labor">노무사</option><option value="law">변호사</option><option value="accounting">회계사</option><option value="office_staff">전문직 사무소 직원</option><option value="employee">회사원</option><option value="student">학생</option><option value="other">기타 (직접 입력)</option></select></div>
+<div class="lead-field" id="prereg-other-field" hidden><label for="prereg-profession-other">기타 직군 <span>직접 입력</span></label><input id="prereg-profession-other" name="profession_other" maxlength="50" placeholder="예: 프리랜서, 공무원" /></div>
 <div class="lead-field"><label for="prereg-phone">전화번호 <span>선택</span></label><input id="prereg-phone" name="phone" type="tel" autocomplete="tel" maxlength="24" placeholder="010-0000-0000" /></div>
 
 </div>
 <div class="trap-field" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off" /></label></div>
-<details class="lead-privacy"><summary>개인정보 수집·이용 안내</summary><dl><dt>수집 주체: </dt><dd>마스키 프로젝트 팀 드림즈</dd><dt>목적: </dt><dd>체험 안내 및 초기 사용 기회 안내, 신청자 직군별 수요 파악, 신청한 솔루션 검증 참여 관련 연락</dd><dt>필수 항목: </dt><dd>이름, 이메일, 직군(기타 선택 시 직접 입력한 내용)</dd><dt>선택 항목: </dt><dd>전화번호</dd><dt>보유 기간: </dt><dd>수집일로부터 6개월 또는 동의 철회 시까지</dd><dt>동의 거부: </dt><dd>필수 수집 동의를 거부하면 신청할 수 없습니다. 선택 항목을 입력하지 않아도 신청할 수 있습니다.</dd><dt>저장: </dt><dd>신청 정보는 Supabase에 저장됩니다. 고객 업무자료는 수집하지 않습니다.</dd><dt>열람·삭제 문의: </dt><dd data-privacy-contact>연락처 연결 준비 중</dd></dl></details>
+<details class="lead-privacy"><summary>개인정보 수집·이용 안내</summary><dl><dt>수집·이용 주체: </dt><dd>MASKI 운영팀</dd><dt>수집 목적: </dt><dd>MASKI 출시 및 초기 사용 안내, 기업 도입 문의 응대</dd><dt>수집 항목: </dt><dd>필수: 이름, 이메일<br>기업 도입 문의 시 추가 필수: 회사·사무소명, 회사 규모<br>선택: 전화번호, 직군</dd><dt>보유 및 이용 기간: </dt><dd>수집일로부터 6개월 또는 동의 철회 시까지</dd><dt>동의 거부: </dt><dd>필수 항목 수집·이용에 동의하지 않으면 신청할 수 없습니다. 선택 항목은 입력하지 않아도 신청할 수 있습니다.</dd><dt>저장 방식: </dt><dd>신청 정보는 Supabase에 저장되며, 고객의 실제 업무 문서나 파일은 수집하지 않습니다.</dd><dt>개인정보 관리 담당자: </dt><dd>남성수</dd><dt>개인정보 열람·정정·삭제 및 동의 철회 문의: </dt><dd data-privacy-contact>seongsunam@gachon.ac.kr</dd></dl></details>
 <label class="lead-check"><input type="checkbox" name="consent" required /><span>[필수] 위 필수 항목의 수집·이용에 동의합니다.</span></label>
-<label class="lead-check"><input type="checkbox" name="optional_consent" /><span>[선택] 전화번호 수집·이용에 동의합니다. 선택 항목 없이도 신청할 수 있습니다.</span></label>
+<label class="lead-check"><input type="checkbox" name="optional_consent" /><span>[선택] 전화번호·직군 수집·이용에 동의합니다. 선택 항목 없이도 신청할 수 있습니다.</span></label>
 <button class="btn primary submit-lead" type="submit">무료 체험 신청하기</button>
 </fieldset><p class="lead-status" role="status" aria-live="polite"></p></form><form class="lead-form" data-kind="enterprise" hidden>
 <fieldset>
@@ -114,13 +140,13 @@
 <div class="lead-field"><label for="enterprise-company">회사·사무소 이름 <span>필수</span></label><input id="enterprise-company" name="company" required maxlength="100" autocomplete="organization" placeholder="회사 또는 사무소명" /></div><div class="lead-field"><label for="enterprise-size">회사 규모 <span>필수</span></label><select id="enterprise-size" name="company_size" required><option value="">회사 규모를 선택해 주세요</option><option value="1-10">1–10명</option><option value="11-50">11–50명</option><option value="51-200">51–200명</option><option value="201-1000">201–1,000명</option><option value="1001+">1,001명 이상</option></select></div>
 </div>
 <div class="trap-field" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off" /></label></div>
-<details class="lead-privacy"><summary>개인정보 수집·이용 안내</summary><dl><dt>수집 주체: </dt><dd>마스키 프로젝트 팀 드림즈</dd><dt>목적: </dt><dd>기업 도입 문의 응대와 도입 검토 상담</dd><dt>필수 항목: </dt><dd>이름, 이메일, 회사·사무소 이름, 회사 규모</dd><dt>선택 항목: </dt><dd>전화번호</dd><dt>보유 기간: </dt><dd>수집일로부터 6개월 또는 동의 철회 시까지</dd><dt>동의 거부: </dt><dd>필수 수집 동의를 거부하면 신청할 수 없습니다. 선택 항목을 입력하지 않아도 신청할 수 있습니다.</dd><dt>저장: </dt><dd>신청 정보는 Supabase에 저장됩니다. 고객 업무자료는 수집하지 않습니다.</dd><dt>열람·삭제 문의: </dt><dd data-privacy-contact>연락처 연결 준비 중</dd></dl></details>
+<details class="lead-privacy"><summary>개인정보 수집·이용 안내</summary><dl><dt>수집·이용 주체: </dt><dd>MASKI 운영팀</dd><dt>수집 목적: </dt><dd>MASKI 출시 및 초기 사용 안내, 기업 도입 문의 응대</dd><dt>수집 항목: </dt><dd>필수: 이름, 이메일<br>기업 도입 문의 시 추가 필수: 회사·사무소명, 회사 규모<br>선택: 전화번호, 직군</dd><dt>보유 및 이용 기간: </dt><dd>수집일로부터 6개월 또는 동의 철회 시까지</dd><dt>동의 거부: </dt><dd>필수 항목 수집·이용에 동의하지 않으면 신청할 수 없습니다. 선택 항목은 입력하지 않아도 신청할 수 있습니다.</dd><dt>저장 방식: </dt><dd>신청 정보는 Supabase에 저장되며, 고객의 실제 업무 문서나 파일은 수집하지 않습니다.</dd><dt>개인정보 관리 담당자: </dt><dd>남성수</dd><dt>개인정보 열람·정정·삭제 및 동의 철회 문의: </dt><dd data-privacy-contact>seongsunam@gachon.ac.kr</dd></dl></details>
 <label class="lead-check"><input type="checkbox" name="consent" required /><span>[필수] 위 필수 항목의 수집·이용에 동의합니다.</span></label>
 <label class="lead-check"><input type="checkbox" name="optional_consent" /><span>[선택] 전화번호 수집·이용에 동의합니다. 선택 항목 없이도 신청할 수 있습니다.</span></label>
 <button class="btn primary submit-lead" type="submit">기업 도입 문의 보내기</button>
 </fieldset><p class="lead-status" role="status" aria-live="polite"></p></form><p class="measurement-note">관심도 측정을 위해 무작위 세션 ID, 유입 경로, 버튼 클릭·단계 진행·제출 여부를 기록합니다. 이름·이메일·전화번호는 별도 신청 테이블에만 저장됩니다.</p></div></dialog>
-<script src="config.js?v=maski-3"></script>
+<script src="config.js?v=maski-4"></script>
 <script src="demo.js?v=maski-4"></script>
-<script src="leads.js?v=maski-5"></script>
+<script src="leads.js?v=maski-6"></script>
 </body>
 </html>

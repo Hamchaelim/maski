@@ -1,0 +1,45 @@
+/* 2026-11-06 랜딩 수정: 고객정보 확인 섹션, 하단 경로 카드, FAQ 제목, 푸터 사업자 정보 */
+.why{padding:96px 0 0;text-align:center}
+.why>.wrap>.eyebrow{display:block;color:#b297d7;margin-bottom:12px}
+.why h2{font-size:clamp(25px,3.1vw,37px);font-weight:650;line-height:1.35;letter-spacing:-.04em;margin:0 0 14px;color:#fff}
+.why-sub{font-size:15px;font-weight:550;color:#d3bff0;margin:0 0 14px;letter-spacing:-.015em}
+.why-lead{font-size:14px;line-height:1.85;color:#968ba7;max-width:620px;margin:0 auto;word-break:keep-all}
+.why-panel{margin:44px 0 0;text-align:left;border:1px solid #ffffff16;border-radius:22px;background:linear-gradient(150deg,#ffffff07,#ffffff01 55%),#0f0a17;padding:34px 34px 28px;box-shadow:inset 0 1px #ffffff08}
+.why-panel h3{font-size:21px;font-weight:650;letter-spacing:-.03em;margin:0 0 10px;color:#f4ecff}
+.why-panel-lead{font-size:13px;line-height:1.8;color:#9a8cad;margin:0;word-break:keep-all}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:26px 0 0}
+.why-card{border:1px solid #ffffff12;border-radius:16px;background:#ffffff04;padding:22px 20px}
+.why-card:nth-child(2){border-color:#a66fff45;background:radial-gradient(ellipse at 50% 0%,#b569ff26,transparent 70%),#140b22}
+.why-icon,.path-icon{width:22px;height:22px;fill:none;stroke:#c9a9f5;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.why-card h4{font-size:16px;font-weight:650;margin:14px 0 9px;letter-spacing:-.02em;color:#f1e8ff}
+.why-docs{font-size:12px;color:#a596b8;margin:0 0 8px;line-height:1.7}
+.why-ids{font-size:12px;font-weight:600;color:#dcc8f7;margin:0;line-height:1.7;word-break:keep-all}
+.why-note{font-size:11px;color:#6f6380;margin:20px 0 0}
+.capture.paths{text-align:left;padding:38px 34px}
+.capture.paths h3{text-align:center;margin-bottom:26px}
+.path-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.path{display:flex;flex-direction:column;align-items:flex-start;border:1px solid #ffffff12;border-radius:16px;background:#ffffff04;padding:24px 22px}
+.path h4{font-size:17px;font-weight:650;margin:14px 0 8px;letter-spacing:-.02em;color:#f4ecff}
+.capture.paths .path p{font-size:13px;line-height:1.8;color:#a091b4;margin:0 0 20px;max-width:none;flex:1;word-break:keep-all}
+.path .btn{width:100%;justify-content:center;text-align:center;text-decoration:none;box-sizing:border-box}
+.btn.light{background:#f4eefc;color:#1a1024;border:1px solid #f4eefc;font-weight:650}
+.btn.light:hover{background:#fff}
+.faq-title{font-size:18px;font-weight:650;letter-spacing:-.02em;color:#e9defa;margin:56px 0 4px}
+.faq-title+.faq{margin-top:12px}
+.footer-desc{max-width:860px;margin:0 0 12px;word-break:keep-all}
+.footer-biz{margin:0 0 12px;color:#7d7090}
+.footer-biz a,.footer-links a{color:#8e7fa2;text-decoration:underline;text-underline-offset:3px}
+.footer-links{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.footer-links span{color:#4f465b}
+.lead-intro strong{color:#fff;font-weight:700}
+@media(max-width:760px){
+  .why{padding-top:64px}
+  .why h2{font-size:25px;line-height:1.4}
+  .why-sub{font-size:14px}.why-lead{font-size:13px}
+  .why-panel{padding:26px 20px 22px;margin-top:32px}
+  .why-panel h3{font-size:19px}
+  .why-grid,.path-grid{grid-template-columns:1fr;gap:12px}
+  .capture.paths{padding:30px 20px}
+  .capture.paths h3{font-size:21px;margin-bottom:20px}
+  .faq-title{margin-top:44px}
+}
