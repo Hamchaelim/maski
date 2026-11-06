@@ -194,6 +194,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:26px 0 44px;colo
     <h2>샘플로 먼저 확인해 보세요</h2><p class="hint" style="color:var(--warn);line-height:1.7;margin-bottom:18px">연구용 시제품입니다. 규칙 기반 탐지로 누락·오탐이 생길 수 있어, 먼저 가상 자료로 시험해 주세요. 다운로드 전 모든 시트와 결과를 직접 검토해야 합니다. 수식·메모·숨김 객체·문서 속성까지 제거하는 기능은 제공하지 않습니다. 가명 처리만으로 외부 AI 입력의 적법성이나 안전성을 보장하지 않습니다.</p>
     <div class="tabs">
       <div class="tab on" data-tab="xlsx">엑셀 파일</div>
+      <div class="tab" data-tab="pdf">PDF 파일</div>
       <div class="tab" data-tab="text">텍스트 붙여넣기</div>
     </div>
 
@@ -204,6 +205,17 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:26px 0 44px;colo
         <input type="file" id="file" accept=".xlsx,.xls" hidden>
       </div>
       <div class="hint">넣어볼 파일이 없으시면 → <a href="#" id="sample">샘플 급여대장으로 해보기</a></div>
+    </div>
+
+    <div class="panel" id="panel-pdf">
+      <button type="button" class="drop" id="pdfDrop" style="width:100%;color:inherit;font-family:inherit">
+        <span class="big" style="display:block">PDF 파일을 끌어다 놓거나 클릭해 선택하세요</span>
+        <span class="small">텍스트 선택이 가능한 PDF · 최대 20MB / 50쪽</span>
+      </button>
+      <input type="file" id="pdfFile" accept=".pdf,application/pdf" hidden>
+      <p class="hint" style="line-height:1.7">브라우저 안에서 텍스트를 추출해 가명 처리합니다. 원본의 표·이미지·배치는 보존하지 않습니다. 스캔본·암호 PDF는 지원하지 않으며, 이미지 속 개인정보는 검사하지 않습니다. 내려받는 PDF는 처리한 텍스트로 새로 만든 문서이며 텍스트 선택·복사가 가능합니다.</p>
+      <button type="button" class="btn ghost" id="samplePdf">샘플 PDF로 해보기</button>
+      <p id="pdfStatus" class="hint" role="status" aria-live="polite"></p>
     </div>
 
     <div class="panel" id="panel-text">
@@ -230,7 +242,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:26px 0 44px;colo
 
     <div class="capture">
       <h3>다음으로 준비하는 기능</h3>
-      <p>PDF 처리와 원래 정보로 되돌리기(De-masking)를 검토 중입니다. 이 데모에서는 이메일 신청을 받지 않습니다.</p>
+      <p>스캔 PDF 인식과 원래 정보로 되돌리기(De-masking)를 검토 중입니다. 이 데모에서는 이메일 신청을 받지 않습니다.</p>
       <div class="emailrow">
         <input type="email" id="email" placeholder="알림 신청 준비 중" disabled aria-label="알림 신청 준비 중">
         <button class="btn primary" id="sendEmail" disabled>준비 중</button>
@@ -308,9 +320,9 @@ function makeMasker(){
     t=t.replace(/01[016789][-\s]?\d{3,4}[-\s]?\d{4}/g,m=>alias("전화",m));
     t=t.replace(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g,m=>alias("이메일",m));
     t=t.replace(/\b\d{2,6}-\d{2,6}-\d{2,8}\b/g,m=>alias("계좌",m));
-    const nameRe=new RegExp("(["+SURNAMES.join("")+"][가-힣]{1,2})(님|씨|대표|과장|부장|차장|팀장|사장|이사|주임|사원|변호사|노무사|세무사)?(은|는|이|가|을|를|과|와|으로|로)?","g");
+    const nameRe=new RegExp("(?<![가-힣])(["+SURNAMES.join("")+"][가-힣]{1,2})(님|씨|대표|과장|부장|차장|팀장|사장|이사|주임|사원|변호사|노무사|세무사)?(은|는|이|가|을|를|과|와|으로|로)?(?![가-힣])","g");
     t=t.replace(nameRe,(m,name,title,josa)=>{
-      if(name.length===1)return m;
+      if(name.length===1 || ["성명","이름","연락처","기본급","주민","번호","계좌","전화","이메일","금액","날짜","거래","내용","원본","가명","지급","수당","급여","사업","사업자","담당","상담","서면","문서","주소","대표","직원","정산","공제","합계","고객","정보","노무사","세무사","변호사"].includes(name))return m;
       const a=alias("이름",name);let out=a+(title||"");
       if(josa){out+=fixJosa(a,josa);}return out;
     });
@@ -331,8 +343,9 @@ function renderMap(map){
   el.innerHTML=map.size===0?"<div><span>-</span><span>-</span></div>":[...map.entries()].map(([o,a])=>`<div><span>${escapeHtml(o)}</span><span>${escapeHtml(a)}</span></div>`).join("");
 }
 
-let lastText="",lastWb=null;
+let lastText="",lastWb=null, lastPdfName=null;
 function processText(text){
+  lastPdfName=null;lastWb=null;
   const m=makeMasker();const out=m.run(text);lastText=out;
   renderSummary(m.counts);renderMap(m.map);
   let hl=escapeHtml(out);
@@ -344,6 +357,7 @@ function processText(text){
   log("mask_run",{mode:"text",len:text.length,counts:m.counts,real:total>0});
 }
 function processWorkbook(wb,name){
+  lastPdfName=null;lastText="";
   const m=makeMasker();
   wb.SheetNames.forEach(sn=>{const ws=wb.Sheets[sn];Object.keys(ws).forEach(addr=>{
     if(addr[0]==="!")return;const cell=ws[addr];
@@ -360,7 +374,7 @@ function processWorkbook(wb,name){
       for(const a of aliases){if(v.includes(escapeHtml(a)))v=v.split(escapeHtml(a)).join(`<mark>${escapeHtml(a)}</mark>`);}
       cell.innerHTML=v;tr.appendChild(cell);});tbl.appendChild(tr);});
   const pv=document.getElementById("preview");pv.innerHTML="";pv.appendChild(tbl);
-  const dl=document.getElementById("download");dl.style.display="";dl.dataset.name=(name||"masked").replace(/\.(xlsx|xls)$/i,"")+"_가명.xlsx";
+  const dl=document.getElementById("download");dl.style.display="";dl.textContent="가명 처리된 파일 내려받기";dl.dataset.name=(name||"masked").replace(/\.(xlsx|xls)$/i,"")+"_가명.xlsx";
   document.getElementById("copy").style.display="none";
   renderResult();
   const total=Object.values(m.counts).reduce((a,b)=>a+b,0);
@@ -383,7 +397,7 @@ const SAMPLE_TEXT="김민수(900101-1234567) 대표님께 급여 3,200,000원을
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{
   document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
   document.querySelectorAll(".panel").forEach(x=>x.classList.remove("on"));
-  t.classList.add("on");document.getElementById("panel-"+t.dataset.tab).classList.add("on");
+  lastPdfName=null;lastWb=null;lastText="";t.classList.add("on");document.getElementById("panel-"+t.dataset.tab).classList.add("on");
   document.getElementById("result").classList.remove("on");log("tab",{tab:t.dataset.tab});
 });
 const drop=document.getElementById("drop"),file=document.getElementById("file");
@@ -395,8 +409,8 @@ file.onchange=e=>{if(e.target.files[0])readFile(e.target.files[0]);};
 document.getElementById("sample").onclick=e=>{e.preventDefault();log("sample",{mode:"xlsx"});processWorkbook(sampleWorkbook(),"샘플_급여대장.xlsx");};
 document.getElementById("runText").onclick=()=>{const v=document.getElementById("ta").value.trim();if(!v)return;processText(v);};
 document.getElementById("sampleText").onclick=()=>{document.getElementById("ta").value=SAMPLE_TEXT;log("sample",{mode:"text"});processText(SAMPLE_TEXT);};
-document.getElementById("download").onclick=function(){if(!lastWb)return;XLSX.writeFile(lastWb,this.dataset.name||"masked_가명.xlsx");log("download",{});};
-document.getElementById("copy").onclick=()=>{navigator.clipboard.writeText(lastText);const b=document.getElementById("copy");b.textContent="복사됨 ✓";setTimeout(()=>b.textContent="가명 텍스트 복사",1500);log("copy",{});};
+document.getElementById("download").onclick=async function(){if(lastPdfName){await downloadPdf();return;}if(!lastWb)return;XLSX.writeFile(lastWb,this.dataset.name||"masked_가명.xlsx");log("download",{});};
+document.getElementById("copy").onclick=()=>{navigator.clipboard.writeText(lastText).catch(()=>alert("복사 권한을 확인하거나 미리보기에서 텍스트를 직접 선택해 주세요."));const b=document.getElementById("copy");b.textContent="복사됨 ✓";setTimeout(()=>b.textContent="가명 텍스트 복사",1500);log("copy",{});};
 document.getElementById("sendEmail").onclick=()=>{
   const v=document.getElementById("email").value.trim();
   if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){document.getElementById("email").focus();return;}
@@ -405,5 +419,6 @@ document.getElementById("sendEmail").onclick=()=>{
   document.getElementById("email").value="";document.getElementById("email").disabled=true;document.getElementById("sendEmail").disabled=true;
 };
 </script>
+<script src="pdf-support.js"></script>
 </body>
 </html>
