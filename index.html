@@ -213,7 +213,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:26px 0 44px;colo
         <span class="small">텍스트 선택이 가능한 PDF · 최대 20MB / 50쪽</span>
       </button>
       <input type="file" id="pdfFile" accept=".pdf,application/pdf" hidden>
-      <p class="hint" style="line-height:1.7">브라우저 안에서 텍스트를 추출해 가명 처리합니다. 원본의 표·이미지·배치는 보존하지 않습니다. 스캔본·암호 PDF는 지원하지 않으며, 이미지 속 개인정보는 검사하지 않습니다. 내려받는 PDF는 처리한 텍스트로 새로 만든 문서이며 텍스트 선택·복사가 가능합니다.</p>
+      <p class="hint" style="line-height:1.7">브라우저 안에서 텍스트를 추출해 가명 처리합니다. 원본의 표·이미지·배치는 보존하지 않습니다. 스캔본·암호 PDF는 지원하지 않으며, 이미지 속 개인정보는 검사하지 않습니다. 처리 결과는 일부 텍스트 미리보기로만 제공하며 PDF 다운로드는 제공하지 않습니다.</p>
       <button type="button" class="btn ghost" id="samplePdf">샘플 PDF로 해보기</button>
       <p id="pdfStatus" class="hint" role="status" aria-live="polite"></p>
     </div>
@@ -229,14 +229,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:26px 0 44px;colo
     <div class="result" id="result">
       <div class="summary" id="summary"></div>
       <div class="previewbox" id="preview"></div>
-      <details class="mapwrap">
-        <summary>가명 ↔ 원본 매핑표 보기 (이 표는 저장되지 않습니다)</summary>
-        <div class="maptable" id="maptable"></div>
-      </details>
-      <div class="row">
-        <button class="btn primary" id="download">가명 처리된 파일 내려받기</button>
-        <button class="btn ghost" id="copy">가명 텍스트 복사</button>
-      </div>
+      <p class="hint" style="line-height:1.7;color:var(--violet2)">무료 체험은 결과 일부 미리보기만 제공합니다(텍스트 최대 8줄·600자, 엑셀 첫 시트 최대 5행·8열). 전체 결과 다운로드·복사 기능은 제공하지 않습니다.</p>
       <div class="hint">※ 파일 내용은 브라우저 메모리에서 처리합니다. 엑셀 라이브러리와 글꼴은 외부 CDN에서 불러옵니다. 새로고침하면 현재 결과와 매핑표가 사라집니다.</div>
     </div>
 
@@ -255,7 +248,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:26px 0 44px;colo
 <section class="how">
   <div class="wrap">
     <h2>자료가 내 컴퓨터를 떠나지 않습니다</h2>
-    <p class="lead2">선택한 자료의 내용은 서버로 보내지 않고 브라우저 안에서 처리합니다. 결과를 확인한 뒤 필요한 파일만 직접 내려받으세요.</p>
+    <p class="lead2">선택한 자료의 내용은 서버로 보내지 않고 브라우저 안에서 처리합니다. 무료 체험에서 가명 처리 결과의 일부를 확인할 수 있습니다.</p>
     <div class="cards">
       <div class="c"><div class="n">01</div><h4>식별정보만 가명으로</h4><p>이름·주민번호·사업자번호·계좌·연락처·이메일의 탐지와 치환을 시험합니다. 금액·날짜·내용 보존을 목표로 하며, 처리 결과는 직접 검토해야 합니다.</p></div>
       <div class="c"><div class="n">02</div><h4>서버를 거치지 않음</h4><p>업로드가 아니라, 당신 브라우저가 직접 처리합니다. 원문은 어디로도 전송·저장되지 않습니다.</p></div>
@@ -338,20 +331,17 @@ function renderSummary(counts){
   const order=["이름","주민번호","사업자번호","계좌","전화","이메일"];
   document.getElementById("summary").innerHTML=order.filter(k=>counts[k]>0).map(k=>`<div class="chip">${k} <b>${counts[k]}</b></div>`).join("")||`<div class="chip">탐지된 식별정보 없음</div>`;
 }
-function renderMap(map){
-  const el=document.getElementById("maptable");
-  el.innerHTML=map.size===0?"<div><span>-</span><span>-</span></div>":[...map.entries()].map(([o,a])=>`<div><span>${escapeHtml(o)}</span><span>${escapeHtml(a)}</span></div>`).join("");
-}
+function renderMap() {}
 
 let lastText="",lastWb=null, lastPdfName=null;
 function processText(text){
   lastPdfName=null;lastWb=null;
   const m=makeMasker();const out=m.run(text);lastText=out;
   renderSummary(m.counts);renderMap(m.map);
-  let hl=escapeHtml(out);
+  const excerpt=out.split("\n").slice(0,8).join("\n").slice(0,600);
+  let hl=escapeHtml(excerpt);
   for(const a of new Set(m.map.values())){hl=hl.split(escapeHtml(a)).join(`<mark>${escapeHtml(a)}</mark>`);}
   document.getElementById("preview").innerHTML=`<pre>${hl}</pre>`;
-  document.getElementById("download").style.display="none";document.getElementById("copy").style.display="";
   renderResult();
   const total=Object.values(m.counts).reduce((a,b)=>a+b,0);
   log("mask_run",{mode:"text",len:text.length,counts:m.counts,real:total>0});
@@ -365,17 +355,15 @@ function processWorkbook(wb,name){
   });});
   lastWb=wb;renderSummary(m.counts);renderMap(m.map);
   const ws=wb.Sheets[wb.SheetNames[0]];
-  const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:""}).slice(0,30);
+  const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:""}).slice(0,5);
   const aliases=new Set(m.map.values());
   const tbl=document.createElement("table");tbl.className="xl";
   rows.forEach((r,i)=>{const tr=document.createElement("tr");
-    r.forEach(c=>{const cell=document.createElement(i===0?"th":"td");
+    r.slice(0,8).forEach(c=>{const cell=document.createElement(i===0?"th":"td");
       let v=escapeHtml(String(c));
       for(const a of aliases){if(v.includes(escapeHtml(a)))v=v.split(escapeHtml(a)).join(`<mark>${escapeHtml(a)}</mark>`);}
       cell.innerHTML=v;tr.appendChild(cell);});tbl.appendChild(tr);});
   const pv=document.getElementById("preview");pv.innerHTML="";pv.appendChild(tbl);
-  const dl=document.getElementById("download");dl.style.display="";dl.textContent="가명 처리된 파일 내려받기";dl.dataset.name=(name||"masked").replace(/\.(xlsx|xls)$/i,"")+"_가명.xlsx";
-  document.getElementById("copy").style.display="none";
   renderResult();
   const total=Object.values(m.counts).reduce((a,b)=>a+b,0);
   log("mask_run",{mode:"xlsx",counts:m.counts,real:total>0});
@@ -409,8 +397,6 @@ file.onchange=e=>{if(e.target.files[0])readFile(e.target.files[0]);};
 document.getElementById("sample").onclick=e=>{e.preventDefault();log("sample",{mode:"xlsx"});processWorkbook(sampleWorkbook(),"샘플_급여대장.xlsx");};
 document.getElementById("runText").onclick=()=>{const v=document.getElementById("ta").value.trim();if(!v)return;processText(v);};
 document.getElementById("sampleText").onclick=()=>{document.getElementById("ta").value=SAMPLE_TEXT;log("sample",{mode:"text"});processText(SAMPLE_TEXT);};
-document.getElementById("download").onclick=async function(){if(lastPdfName){await downloadPdf();return;}if(!lastWb)return;XLSX.writeFile(lastWb,this.dataset.name||"masked_가명.xlsx");log("download",{});};
-document.getElementById("copy").onclick=()=>{navigator.clipboard.writeText(lastText).catch(()=>alert("복사 권한을 확인하거나 미리보기에서 텍스트를 직접 선택해 주세요."));const b=document.getElementById("copy");b.textContent="복사됨 ✓";setTimeout(()=>b.textContent="가명 텍스트 복사",1500);log("copy",{});};
 document.getElementById("sendEmail").onclick=()=>{
   const v=document.getElementById("email").value.trim();
   if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){document.getElementById("email").focus();return;}

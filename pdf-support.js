@@ -65,9 +65,7 @@ async function processPdf(file) {
     }
     if (job !== pdfJob) return;
     processText(pages.map((text,i) => `[${i+1}쪽]\n${text}`).join('\n\n'));
-    lastPdfName = '가리고_가명처리.pdf';
-    const button = document.getElementById('download');
-    button.style.display = ''; button.textContent = '가명 처리 PDF 내려받기';
+    lastPdfName = null;
     pdfStatus.textContent = `${pages.length}쪽 텍스트 처리 완료. 누락·오탐과 원문 대비 내용 손실을 확인해 주세요. 이미지·서명·도장은 출력에 포함되지 않습니다.`;
   } catch (error) {
     if (job === pdfJob) {
@@ -79,19 +77,6 @@ async function processPdf(file) {
     if (task) await task.destroy().catch(() => {});
     pdfBusy = false; pdfDrop.disabled = false; pdfInput.value = '';
   }
-}
-
-async function downloadPdf() {
-  const text = lastText;
-  if (!text || !lastPdfName) return;
-  const button = document.getElementById('download');
-  button.disabled = true;
-  try {
-    if (!window.jspdf) throw new Error('PDF 생성 라이브러리를 불러오지 못했습니다.');
-    const doc = await createTextPdf(text);
-    doc.save('가리고_가명처리.pdf');
-  } catch (error) { alert(error.message || 'PDF 생성 중 오류가 발생했습니다. 텍스트 복사를 이용해 주세요.'); }
-  finally { button.disabled = false; }
 }
 
 pdfDrop.onclick = () => pdfInput.click();
