@@ -35,8 +35,8 @@
     opener=button;
     track('cta_click',kind,button.dataset.placement||'page');
     document.querySelectorAll('.lead-form').forEach(form=>{form.hidden=form.dataset.kind!==kind;});
-    document.getElementById('lead-dialog-title').textContent=kind==='preregistration'?'마스키 사전예약':'기업 도입 문의';
-    document.getElementById('lead-dialog-intro').textContent=kind==='preregistration'?'출시 안내와 초기 사용 기회를 이메일로 받아보세요. 사전예약은 무료이며 결제가 발생하지 않습니다.':'도입을 검토 중인 업무와 조직 정보를 남겨주세요. 확인 후 이메일로 연락드리겠습니다.';
+    document.getElementById('lead-dialog-title').textContent=kind==='preregistration'?'마스키 체험 신청':'기업 도입 문의';
+    document.getElementById('lead-dialog-intro').textContent=kind==='preregistration'?'체험이 열리면 남겨주신 이메일로 가장 먼저 안내드려요. 신청은 무료이며 결제가 발생하지 않습니다.':'도입을 검토 중인 업무와 조직 정보를 남겨주세요. 확인 후 이메일로 연락드리겠습니다.';
     if(!dialog.open)dialog.showModal();
     const first=dialog.querySelector('.lead-form:not([hidden]) input:not([type=hidden])');
     if(enabled)first?.focus();
@@ -57,6 +57,11 @@
     const status=form.querySelector('.lead-status');
     const button=form.querySelector('[type=submit]');
     if(!enabled)button.textContent='접수 준비 중';
+    const profession=form.querySelector('[name=profession]');
+    const otherInput=form.querySelector('[name=profession_other]');
+    const syncOther=()=>{if(!profession||!otherInput)return;const isOther=profession.value==='other';otherInput.closest('.lead-field').hidden=!isOther;otherInput.required=isOther;if(!isOther)otherInput.value='';};
+    profession?.addEventListener('change',syncOther);syncOther();
+    form.addEventListener('reset',()=>setTimeout(syncOther));
     form.addEventListener('input',()=>{
       if(!started.has(form.dataset.kind)){started.add(form.dataset.kind);track('form_start',form.dataset.kind,'form');}
       status.textContent='';
@@ -70,6 +75,10 @@
       const phone=String(data.get('phone')||'').trim().replace(/[\s()-]/g,'');
       if(phone&&!/^\+?[0-9]{8,15}$/.test(phone)){status.textContent='전화번호를 확인해 주세요. 숫자 8~15자리로 입력할 수 있습니다.';return;}
       if(phone&&data.get('optional_consent')!=='on'){status.textContent='전화번호를 남기려면 선택 항목 수집에 동의해 주세요. 전화번호 없이도 신청할 수 있습니다.';return;}
+      const professionValue=String(data.get('profession')||'');
+      const professionOther=String(data.get('profession_other')||'').trim();
+      if(form.dataset.kind==='preregistration'&&!professionValue){status.textContent='직군을 선택해 주세요.';return;}
+      if(professionValue==='other'&&!professionOther){status.textContent='기타 직군을 직접 입력해 주세요.';otherInput?.focus();return;}
       button.disabled=true;status.textContent='신청 내용을 저장하고 있습니다…';status.classList.remove('success');
       track('form_submit_attempt',form.dataset.kind,'form');
       try{
@@ -78,11 +87,13 @@
           p_lead_kind:form.dataset.kind,p_name:String(data.get('name')||'').trim(),
           p_email:String(data.get('email')||'').trim().toLowerCase(),p_phone:phone,
           p_company:String(data.get('company')||'').trim(),p_company_size:String(data.get('company_size')||''),
+          p_profession:form.dataset.kind==='preregistration'?professionValue:'unknown',
+          p_profession_other:professionValue==='other'?professionOther:'',
           p_consent:data.get('consent')==='on',
-          p_optional_consent:data.get('optional_consent')==='on',p_consent_version:'2026-11-06-v1'
+          p_optional_consent:data.get('optional_consent')==='on',p_consent_version:'2026-11-06-v2'
         });
         if(result?.ok!==true)throw new Error('not_saved');
-        status.classList.add('success');status.textContent=form.dataset.kind==='preregistration'?'사전예약이 접수되었습니다. 출시 안내는 남겨주신 이메일로 드리겠습니다.':'기업 도입 문의가 접수되었습니다. 확인 후 이메일로 연락드리겠습니다.';
+        status.classList.add('success');status.textContent=form.dataset.kind==='preregistration'?'체험 신청이 접수되었습니다. 체험이 열리면 남겨주신 이메일로 안내드리겠습니다.':'기업 도입 문의가 접수되었습니다. 확인 후 이메일로 연락드리겠습니다.';
         form.reset();fieldset.disabled=true;button.textContent='접수 완료';
       }catch{
         status.classList.remove('success');status.textContent='저장 여부를 확인하지 못했습니다. 잠시 후 다시 시도해 주세요. 같은 이메일의 중복 신청은 합산하지 않습니다.';
