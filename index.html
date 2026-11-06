@@ -6,12 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>마스키 MASKI — 고객 정보는 지키고, AI 업무는 간편하게</title>
 <meta name="description" content="전문직 사무소를 위한 로컬 가명 처리 도구 마스키. 고객 식별정보를 가명으로 바꾸고, 업무 내용은 그대로 이어가는 사용 흐름을 확인하세요." />
-<link rel="stylesheet" href="light.css?v=1" />
-<link rel="stylesheet" href="maski.css?v=maski-1" />
 <link rel="stylesheet" href="leads.css?v=1" />
-<meta name="theme-color" content="#172554" />
+<meta name="theme-color" content="#08050e" />
 <link rel="preload" href="assets/fonts/SUIT-Variable.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="typography.css?v=1" />
+<link rel="stylesheet" href="premium.css?v=1" />
 </head>
 <body>
 
@@ -22,27 +21,25 @@
   <div class="wrap">
     <div class="nav">
       <a class="brand" href="#" aria-label="마스키 홈"><span class="logo-crop"><img src="assets/maski-logo.png" alt="MASKI" width="1280" height="1280" /></span></a>
-      <div class="nav-right"><div class="navtag">세무 · 노무 · 법률 사무소를 위한 마스키</div><button class="btn primary" type="button" data-lead-type="preregistration" data-placement="nav">사전예약</button><button class="btn ghost" type="button" data-lead-type="enterprise" data-placement="nav">기업 도입 문의</button></div>
+      <div class="nav-right"><a class="nav-menu" href="#demo">작동 방식</a><a class="nav-menu" href="#local-principle">설계 원칙</a><button class="btn primary" type="button" data-lead-type="preregistration" data-placement="nav">사전예약</button><button class="btn ghost" type="button" data-lead-type="enterprise" data-placement="nav">기업 도입 문의</button></div>
     </div>
 
     <div class="hero">
       <div class="heroText">
         <span class="eyebrow">PRIVATE BY DESIGN</span>
-        <h1 id="headline">AI에 보내기 전,<br><span class="g">고객 정보는</span><br>내 컴퓨터에.</h1>
-        <p class="lead">이름과 식별번호는 가명으로, 금액과 사실관계는 그대로. AI로 작성하는 업무에도 고객 정보는 소중하니까.</p><div class="row"><button class="btn primary" type="button" data-lead-type="preregistration" data-placement="hero">사전예약</button><button class="btn ghost" type="button" data-lead-type="enterprise" data-placement="hero">기업 도입 문의</button></div><a class="flow-link" href="#demo">사용 흐름 먼저 살펴보기 →</a>
+        <h1 id="headline">원문은 내 컴퓨터에.<br><span class="g">AI에는 가명으로.</span></h1>
+        <p class="lead">고객의 이름과 식별정보는 가명으로 바꾸고,<br>금액과 업무의 맥락은 그대로 이어가세요.</p><div class="row"><button class="btn primary" type="button" data-lead-type="preregistration" data-placement="hero">사전예약</button><button class="btn ghost" type="button" data-lead-type="enterprise" data-placement="hero">기업 도입 문의</button></div><a class="flow-link" href="#demo">사용 흐름 먼저 살펴보기 →</a>
       </div>
 
-      <div class="brand-visual" aria-label="마스키, 고객 식별정보를 가명으로 바꾸는 문서 업무 흐름">
-        <div class="brand-orbit" aria-hidden="true"></div>
-        <span class="logo-crop hero-logo"><img src="assets/maski-logo.png" alt="MASKI" width="1280" height="1280" fetchpriority="high" /></span>
-        <div class="brand-product" aria-hidden="true">
-          <div class="brand-product-header"><span>고객 문서 · 가명 처리</span><b>내 기기에서</b></div>
-          <div class="brand-product-row"><span>성명</span><span><del>김민수</del> → <span class="brand-token">[이름_1]</span></span></div>
-          <div class="brand-product-row"><span>연락처</span><span class="brand-token">[전화_1]</span></div>
-          <div class="brand-product-row"><span>기본급</span><strong>3,200,000원</strong></div>
-          <p class="brand-product-caption"><span></span>식별정보는 가명으로, 업무 내용은 그대로</p>
-        </div>
-        <span class="brand-caption">KEEP THE CONTEXT. MASK THE DETAILS.</span>
+      <div class="product-stage" aria-hidden="true">
+        <div class="orbit-spark">✧</div>
+        <div class="floating-card floating-left"><span class="floating-label">식별정보만 구분</span><strong>이름 · 번호</strong><p>업무에 필요한 내용은 남기고<br>고객 식별정보는 가명으로</p></div>
+        <div class="product-window"><div class="product-top"><span class="mini-brand">MASKI</span><span class="local-pill">내 기기에서 처리하는 흐름</span></div><div class="product-title">문맥은 그대로.<br>식별정보만 가명으로.</div><div class="product-rows">
+        <div class="product-line"><span>성명</span><del>김민수</del><b>[이름_1]</b></div>
+        <div class="product-line"><span>연락처</span><del>010-0000-0001</del><b>[전화_1]</b></div>
+        <div class="product-line"><span>기본급</span><span>3,200,000원</span><b>그대로 유지</b></div>
+        </div><div class="product-footer"><span>식별정보 구분</span><span>문맥 유지</span><span>원문 복원 흐름</span></div></div>
+        <div class="floating-card floating-right"><span class="floating-label">일관된 가명으로 연결</span><div class="mini-line"><span>김민수</span><b>[이름_1]</b></div><div class="mini-line"><span>이서연</span><b>[이름_2]</b></div><p>같은 인물은 같은 가명으로</p></div>
       </div>
     </div>
   </div>
