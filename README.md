@@ -19,4 +19,3 @@ GitHub Pages: main 브랜치 루트 게시.
 ## 사전예약·측정
 
 운영 방법과 집계 기준은 [MEASUREMENT.md](MEASUREMENT.md)를 참고하세요. 공개 문의 이메일을 config.js에 설정해야 신청 접수가 활성화됩니다.
-

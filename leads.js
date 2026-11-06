@@ -48,7 +48,7 @@
   unavailable.hidden=enabled;
   if(connected&&!enabled)unavailable.textContent='신청 안내 연락처를 설정하고 있습니다. 현재 제출은 비활성화되어 있으며, 입력 정보는 수집하지 않습니다.';
   if(!connected)document.querySelector('.measurement-note').textContent='신청 저장소 연결 전에는 접수와 행동 측정이 실행되지 않습니다. 고객 업무자료는 수집하지 않습니다.';
-  if(isTest)unavailable.textContent=enabled?'테스트 모드입니다. 이 페이지의 제출과 클릭은 본 집계에서 제외됩니다.':'테스트 모드 · 저장소 연결 전이므로 아직 접수·측정되지 않습니다.';
+  if(isTest)unavailable.textContent=enabled?'테스트 모드입니다. 이 페이지의 제출과 클릭은 본 집계에서 제외됩니다.':connected?'테스트 모드 · 문의 연락처 설정 전에는 제출할 수 없습니다. 클릭은 테스트 기록으로 저장됩니다.':'테스트 모드 · 저장소 연결 전이므로 아직 접수·측정되지 않습니다.';
   if(isTest)unavailable.hidden=false;
   document.querySelectorAll('[data-privacy-contact]').forEach(el=>{if(config.privacyContact)el.textContent=config.privacyContact;});
   document.querySelectorAll('.lead-form').forEach(form=>{
