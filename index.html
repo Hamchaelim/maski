@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>가리고 — AI는 쓰고 싶고, 유출은 겁나는 당신에게</title>
+<meta name="description" content="세무·노무·법률 사무소를 위한 로컬 가명 처리 도구. 이름·주민번호·사업자번호는 가명으로, 금액과 내용은 그대로. 자료는 브라우저 밖으로 나가지 않습니다." />
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<style>
+:root{
+  --bg:#070711; --bg2:#0d0d1a; --panel:rgba(255,255,255,.045); --line:rgba(255,255,255,.10);
+  --tx:#f3f3f8; --tx2:#9a9ab0; --tx3:#63637a;
+  --violet:#7b7bff; --violet2:#a99bff; --ok:#49e0a6; --warn:#f3b15c;
+  --r:18px; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--tx);
+  font-family:"Pretendard",-apple-system,BlinkMacSystemFont,sans-serif;
+  padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+@media(max-width:600px){.wrap{padding:0 18px}}
+
+/* ambient light like FNmarkets bottom glow */
+.scene{position:relative;overflow:hidden}
+.beam{position:absolute;z-index:0;filter:blur(70px);opacity:.6;pointer-events:none}
+.beam.b1{left:-15%;bottom:-20%;width:70%;height:420px;
+  background:radial-gradient(60% 70% at 40% 60%,#5b4bff 0%,transparent 65%),
+             radial-gradient(50% 60% at 70% 40%,#8a5bff 0%,transparent 60%)}
+.beam.b2{right:-20%;top:-15%;width:55%;height:380px;opacity:.4;
+  background:radial-gradient(55% 60% at 60% 40%,#3f6bff 0%,transparent 62%)}
+.scene>*{position:relative;z-index:1}
+
+/* top bar */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:-.02em;font-size:18px}
+.brand .mk{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;
+  background:linear-gradient(135deg,var(--violet),#4b4bff);font-size:13px;color:#fff;font-weight:800}
+.navtag{font-size:12.5px;color:var(--tx2);border:1px solid var(--line);border-radius:999px;padding:6px 13px}
+
+/* hero grid */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:34px 0 20px}
+@media(max-width:860px){.hero{grid-template-columns:1fr;gap:26px;padding:16px 0 10px}}
+
+.eyebrow{display:inline-block;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--violet2);
+  border:1px solid rgba(123,123,255,.3);background:rgba(123,123,255,.08);border-radius:999px;padding:7px 13px;margin-bottom:22px}
+h1{font-weight:800;line-height:1.06;letter-spacing:-.045em;margin:0;
+  font-size:clamp(34px,5.6vw,58px)}
+h1 .g{background:linear-gradient(90deg,var(--violet2),#6a6aff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--tx2);font-size:clamp(14px,2.2vw,16.5px);line-height:1.65;margin:20px 0 0;max-width:34ch}
+
+/* right visual: stacked glass cards showing before->after */
+.stack{position:relative;height:360px}
+@media(max-width:860px){.stack{height:300px;margin-top:6px}}
+.gcard{position:absolute;left:50%;border-radius:14px;border:1px solid rgba(255,255,255,.14);
+  background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.03));
+  backdrop-filter:blur(8px);box-shadow:0 20px 50px rgba(0,0,0,.45);
+  padding:14px 16px;width:300px;transform-origin:center;
+  font-size:13.5px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.gcard .k{color:var(--tx2);font-size:11.5px}
+.gcard .orig{color:#ff9aa2;text-decoration:line-through;opacity:.8}
+.gcard .arr{color:var(--tx3)}
+.gcard .new{color:var(--ok);font-weight:700}
+.g1{top:14px;  transform:translateX(-50%) rotate(-7deg) translateX(-24px)}
+.g2{top:74px;  transform:translateX(-50%) rotate(-2deg) translateX(14px)}
+.g3{top:134px; transform:translateX(-50%) rotate(3deg)  translateX(-10px)}
+.g4{top:194px; transform:translateX(-50%) rotate(7deg)  translateX(20px)}
+.gbase{top:250px;left:50%;transform:translateX(-50%);width:330px;height:66px;border-radius:14px;
+  background:linear-gradient(135deg,rgba(123,123,255,.25),rgba(80,80,255,.08));
+  border:1px solid rgba(123,123,255,.3);backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;color:var(--violet2);font-weight:700;font-size:13px}
+
+/* trust strip */
+.trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2)}
+.trust .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.tcell{padding:16px 18px;border-left:1px solid var(--line)}
+.tcell:first-child{border-left:none}
+.tk{font-size:11px;letter-spacing:.1em;color:var(--tx3);text-transform:uppercase}
+.tv{font-size:15px;margin-top:5px;font-weight:600}
+.tv .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ok);margin-right:7px;vertical-align:middle}
+@media(max-width:600px){.trust .wrap{grid-template-columns:repeat(2,1fr)}.tcell:nth-child(3){border-left:none}}
+
+/* tool */
+.tool{padding:40px 0 8px}
+.tool h2{font-size:clamp(20px,3.4vw,26px);font-weight:800;letter-spacing:-.03em;margin:0 0 16px}
+.tabs{display:flex;gap:8px;margin-bottom:14px}
+.tab{padding:9px 16px;border:1px solid var(--line);border-radius:999px;color:var(--tx2);font-size:14px;cursor:pointer;background:transparent}
+.tab.on{background:var(--tx);color:#070711;border-color:var(--tx);font-weight:700}
+.panel{display:none}.panel.on{display:block}
+
+.drop{border:1.5px dashed var(--line);border-radius:var(--r);background:var(--panel);
+  padding:40px 20px;text-align:center;transition:.15s;cursor:pointer}
+.drop.hover{border-color:var(--violet);background:rgba(123,123,255,.09)}
+.drop .big{font-size:17px;margin-bottom:6px;font-weight:600}
+.drop .small{color:var(--tx3);font-size:13px}
+.hint{color:var(--tx3);font-size:12.5px;margin-top:10px}
+.hint a{color:var(--violet2)}
+
+textarea{width:100%;min-height:180px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+  color:var(--tx);padding:16px;font-size:14px;line-height:1.6;resize:vertical;font-family:inherit}
+textarea::placeholder{color:var(--tx3)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.btn{padding:13px 22px;border-radius:999px;border:none;font-size:15px;font-weight:700;cursor:pointer}
+.btn.primary{background:linear-gradient(135deg,var(--violet),#4b4bff);color:#fff}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--tx)}
+.btn:disabled{opacity:.4;cursor:default}
+
+.result{display:none;margin-top:26px}
+.result.on{display:block}
+.summary{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:13px}
+.chip b{color:var(--ok)}
+.previewbox{border:1px solid var(--line);border-radius:var(--r);background:var(--bg2);max-height:360px;overflow:auto}
+.previewbox pre{margin:0;padding:16px;font-size:12.5px;line-height:1.6;white-space:pre-wrap;word-break:break-all;color:#dcdce4}
+table.xl{border-collapse:collapse;width:100%;font-size:12.5px}
+table.xl td,table.xl th{border:1px solid var(--line);padding:6px 9px;white-space:nowrap}
+table.xl th{background:#151522;position:sticky;top:0;color:var(--tx2);text-align:left}
+mark{background:rgba(123,123,255,.3);color:#d9d4ff;border-radius:3px;padding:0 2px}
+
+.mapwrap{margin-top:12px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.mapwrap summary{cursor:pointer;padding:12px 16px;font-size:13px;color:var(--tx2);background:var(--bg2);list-style:none}
+.mapwrap summary::-webkit-details-marker{display:none}
+.mapwrap summary::before{content:"▸ ";color:var(--tx3)}
+.mapwrap[open] summary::before{content:"▾ "}
+.maptable{padding:4px 16px 14px;font-size:13px}
+.maptable div{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--line);color:var(--tx2)}
+.maptable div span:last-child{color:var(--ok)}
+
+.capture{margin:30px 0;padding:26px;border:1px solid var(--line);border-radius:var(--r);
+  background:linear-gradient(135deg,rgba(123,123,255,.12),rgba(255,255,255,.02))}
+.capture h3{margin:0 0 6px;font-size:18px;font-weight:700}
+.capture p{margin:0 0 16px;color:var(--tx2);font-size:14px}
+.emailrow{display:flex;gap:8px;max-width:440px;flex-wrap:wrap}
+.emailrow input{flex:1;min-width:200px;background:var(--panel);border:1px solid var(--line);border-radius:999px;color:var(--tx);padding:12px 18px;font-size:14px}
+.thanks{color:var(--ok);font-size:14px;margin-top:10px;display:none}
+
+.how{padding:30px 0 10px}
+.how h2{font-size:clamp(22px,4vw,34px);font-weight:800;letter-spacing:-.035em;margin:0 0 8px}
+.how .lead2{color:var(--tx2);font-size:14.5px;margin:0 0 24px;max-width:44ch}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:720px){.cards{grid-template-columns:1fr}}
+.c{border:1px solid var(--line);border-radius:var(--r);padding:22px;
+  background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.012))}
+.c .n{font-size:13px;color:var(--violet2);font-weight:700}
+.c h4{margin:10px 0 8px;font-size:16.5px;font-weight:700}
+.c p{margin:0;color:var(--tx2);font-size:13.5px;line-height:1.6}
+
+footer{border-top:1px solid var(--line);margin-top:40px;padding:26px 0 44px;color:var(--tx3);font-size:12.5px;line-height:1.7}
+</style>
+</head>
+<body>
+
+<section class="scene">
+  <div class="beam b1"></div>
+  <div class="beam b2"></div>
+
+  <div class="wrap">
+    <div class="nav">
+      <div class="brand"><span class="mk">가</span>가리고</div>
+      <div class="navtag">세무 · 노무 · 법률 사무소</div>
+    </div>
+
+    <div class="hero">
+      <div class="heroText">
+        <span class="eyebrow">LOCAL PSEUDONYMIZATION</span>
+        <h1 id="headline">AI는 쓰고 싶고,<br><span class="g">유출은 겁나는</span> 당신에게</h1>
+        <p class="lead">이름·주민번호·사업자번호는 가명으로, 금액과 내용은 그대로. 자료는 이 브라우저 밖으로 나가지 않습니다.</p>
+      </div>
+
+      <div class="stack" aria-hidden="true">
+        <div class="gcard g1"><span class="k">성명</span><span><span class="orig">김민수</span> <span class="arr">→</span> <span class="new">남도윤</span></span></div>
+        <div class="gcard g2"><span class="k">주민번호</span><span><span class="orig">900101-1******</span> <span class="arr">→</span> <span class="new">가림</span></span></div>
+        <div class="gcard g3"><span class="k">사업자</span><span><span class="orig">123-45-67890</span> <span class="arr">→</span> <span class="new">가림</span></span></div>
+        <div class="gcard g4"><span class="k">기본급</span><span><span class="new" style="color:var(--tx)">3,200,000원</span> <span class="k">그대로 유지</span></span></div>
+        <div class="gbase">금액·내용은 건드리지 않습니다</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trust">
+    <div class="wrap">
+      <div class="tcell"><div class="tk">서버 전송</div><div class="tv"><span class="dot"></span>없음</div></div>
+      <div class="tcell"><div class="tk">자료 저장</div><div class="tv"><span class="dot"></span>안 함</div></div>
+      <div class="tcell"><div class="tk">설치</div><div class="tv"><span class="dot"></span>불필요</div></div>
+      <div class="tcell"><div class="tk">처리 위치</div><div class="tv"><span class="dot"></span>내 브라우저</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="tool">
+  <div class="wrap">
+    <h2>샘플로 먼저 확인해 보세요</h2><p class="hint" style="color:var(--warn);line-height:1.7;margin-bottom:18px">연구용 시제품입니다. 규칙 기반 탐지로 누락·오탐이 생길 수 있어, 먼저 가상 자료로 시험해 주세요. 다운로드 전 모든 시트와 결과를 직접 검토해야 합니다. 수식·메모·숨김 객체·문서 속성까지 제거하는 기능은 제공하지 않습니다. 가명 처리만으로 외부 AI 입력의 적법성이나 안전성을 보장하지 않습니다.</p>
+    <div class="tabs">
+      <div class="tab on" data-tab="xlsx">엑셀 파일</div>
+      <div class="tab" data-tab="text">텍스트 붙여넣기</div>
+    </div>
+
+    <div class="panel on" id="panel-xlsx">
+      <div class="drop" id="drop">
+        <div class="big">엑셀 파일을 여기에 끌어다 놓으세요</div>
+        <div class="small">.xlsx · .xls — 또는 클릭해서 선택</div>
+        <input type="file" id="file" accept=".xlsx,.xls" hidden>
+      </div>
+      <div class="hint">넣어볼 파일이 없으시면 → <a href="#" id="sample">샘플 급여대장으로 해보기</a></div>
+    </div>
+
+    <div class="panel" id="panel-text">
+      <textarea id="ta" placeholder="고객 성명, 주민번호, 사업자번호가 들어간 텍스트를 붙여넣으세요.&#10;예) 김민수(900101-1234567) 대표님 급여 3,200,000원 / (주)한빛상사 123-45-67890"></textarea>
+      <div class="row">
+        <button class="btn primary" id="runText">가명 처리</button>
+        <button class="btn ghost" id="sampleText">샘플 문장 넣기</button>
+      </div>
+    </div>
+
+    <div class="result" id="result">
+      <div class="summary" id="summary"></div>
+      <div class="previewbox" id="preview"></div>
+      <details class="mapwrap">
+        <summary>가명 ↔ 원본 매핑표 보기 (이 표는 저장되지 않습니다)</summary>
+        <div class="maptable" id="maptable"></div>
+      </details>
+      <div class="row">
+        <button class="btn primary" id="download">가명 처리된 파일 내려받기</button>
+        <button class="btn ghost" id="copy">가명 텍스트 복사</button>
+      </div>
+      <div class="hint">※ 파일 내용은 브라우저 메모리에서 처리합니다. 엑셀 라이브러리와 글꼴은 외부 CDN에서 불러옵니다. 새로고침하면 현재 결과와 매핑표가 사라집니다.</div>
+    </div>
+
+    <div class="capture">
+      <h3>다음으로 준비하는 기능</h3>
+      <p>PDF 처리와 원래 정보로 되돌리기(De-masking)를 검토 중입니다. 이 데모에서는 이메일 신청을 받지 않습니다.</p>
+      <div class="emailrow">
+        <input type="email" id="email" placeholder="알림 신청 준비 중" disabled aria-label="알림 신청 준비 중">
+        <button class="btn primary" id="sendEmail" disabled>준비 중</button>
+      </div>
+      <div class="thanks" id="thanks">감사합니다. 완성되면 가장 먼저 연락드릴게요.</div>
+    </div>
+  </div>
+</section>
+
+<section class="how">
+  <div class="wrap">
+    <h2>자료가 내 컴퓨터를 떠나지 않습니다</h2>
+    <p class="lead2">선택한 자료의 내용은 서버로 보내지 않고 브라우저 안에서 처리합니다. 결과를 확인한 뒤 필요한 파일만 직접 내려받으세요.</p>
+    <div class="cards">
+      <div class="c"><div class="n">01</div><h4>식별정보만 가명으로</h4><p>이름·주민번호·사업자번호·계좌·연락처·이메일의 탐지와 치환을 시험합니다. 금액·날짜·내용 보존을 목표로 하며, 처리 결과는 직접 검토해야 합니다.</p></div>
+      <div class="c"><div class="n">02</div><h4>서버를 거치지 않음</h4><p>업로드가 아니라, 당신 브라우저가 직접 처리합니다. 원문은 어디로도 전송·저장되지 않습니다.</p></div>
+      <div class="c"><div class="n">03</div><h4>설치도 가입도 없이</h4><p>프로그램을 깔거나 개발자를 부를 필요가 없습니다. 페이지를 열면 바로 씁니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    모든 처리는 이 브라우저 안에서 이루어지며, 입력한 자료는 전송·저장되지 않습니다.<br>
+    가천대학교 코코네스쿨 창업 과정 · 전문직 사무소의 AI 활용 현황 조사 · 연구용 시제품
+  </div>
+</footer>
+
+<script>
+/* ============ 설정 ============ */
+const LOG_ENDPOINT = "";
+const HEADLINE_A = 'AI는 쓰고 싶고,<br><span class="g">유출은 겁나는</span> 당신에게';
+const HEADLINE_B = '고객 정보,<br><span class="g">컴퓨터 밖으로</span> 안 나갑니다';
+
+const qs = new URLSearchParams(location.search);
+const VARIANT = (qs.get("v")||"a").toLowerCase()==="b" ? "b" : "a";
+const FROM = qs.get("from") || "direct";
+document.getElementById("headline").innerHTML = VARIANT==="b"?HEADLINE_B:HEADLINE_A;
+
+// 공개 데모: 사용자 식별자·사용 로그·파일명·이메일을 수집하지 않습니다.
+function log() {}
+
+/* ============ 가명 처리 엔진 ============ */
+const SURNAMES = "김이박최정강조윤장임한오서신권황안송류전홍고문양손배백허유남심노하곽성차주우구민진지엄채원천방공현함변염여추도소석선설마길연위표명기반왕금옥육인맹제모남궁독고".split("");
+function hasBatchim(ch){const code=ch.charCodeAt(0);if(code<0xAC00||code>0xD7A3)return false;return (code-0xAC00)%28!==0;}
+const GIVEN=["도윤","시우","하준","지호","예준","수아","서연","지우","하린","윤서","건우","민재","태오","규빈","채원","다은","승민","예성","한결","라온"];
+function buildNamePool(){const pool=[];for(const s of ["남","서","표","제","라","유","한","도","오","민"])for(const g of GIVEN)pool.push(s+g);return pool;}
+
+function makeMasker(){
+  const map=new Map();
+  const counts={이름:0,주민번호:0,사업자번호:0,계좌:0,전화:0,이메일:0};
+  const namePool=buildNamePool();let np=0;let mail=0;
+  function alias(kind,original){
+    if(map.has(original))return map.get(original);
+    let a;
+    if(kind==="이름"){a=namePool[np++%namePool.length];}
+    else if(kind==="주민번호"){a="900101-1******";}
+    else if(kind==="사업자번호"){a="***-**-*****";}
+    else if(kind==="계좌"){a="****-**-******";}
+    else if(kind==="전화"){a="010-****-****";}
+    else if(kind==="이메일"){mail++;a="user"+mail+"@example.com";}
+    map.set(original,a);counts[kind]++;return a;
+  }
+  function fixJosa(aliasName,josa){
+    const bat=hasBatchim(aliasName[aliasName.length-1]);
+    const pair={"은":bat?"은":"는","는":bat?"은":"는","이":bat?"이":"가","가":bat?"이":"가",
+      "을":bat?"을":"를","를":bat?"을":"를","과":bat?"과":"와","와":bat?"과":"와","으로":bat?"으로":"로","로":bat?"으로":"로"};
+    return pair[josa]||josa;
+  }
+  function run(text){
+    if(typeof text!=="string")return text;
+    let t=text;
+    t=t.replace(/\d{6}[-\s]?[1-4]\d{6}/g,m=>alias("주민번호",m));
+    t=t.replace(/\d{3}-\d{2}-\d{5}/g,m=>alias("사업자번호",m));
+    t=t.replace(/01[016789][-\s]?\d{3,4}[-\s]?\d{4}/g,m=>alias("전화",m));
+    t=t.replace(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g,m=>alias("이메일",m));
+    t=t.replace(/\b\d{2,6}-\d{2,6}-\d{2,8}\b/g,m=>alias("계좌",m));
+    const nameRe=new RegExp("(["+SURNAMES.join("")+"][가-힣]{1,2})(님|씨|대표|과장|부장|차장|팀장|사장|이사|주임|사원|변호사|노무사|세무사)?(은|는|이|가|을|를|과|와|으로|로)?","g");
+    t=t.replace(nameRe,(m,name,title,josa)=>{
+      if(name.length===1)return m;
+      const a=alias("이름",name);let out=a+(title||"");
+      if(josa){out+=fixJosa(a,josa);}return out;
+    });
+    return t;
+  }
+  return {run,counts,map};
+}
+
+/* ============ 렌더 ============ */
+function escapeHtml(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function renderResult(){document.getElementById("result").classList.add("on");document.getElementById("result").scrollIntoView({behavior:"smooth",block:"start"});}
+function renderSummary(counts){
+  const order=["이름","주민번호","사업자번호","계좌","전화","이메일"];
+  document.getElementById("summary").innerHTML=order.filter(k=>counts[k]>0).map(k=>`<div class="chip">${k} <b>${counts[k]}</b></div>`).join("")||`<div class="chip">탐지된 식별정보 없음</div>`;
+}
+function renderMap(map){
+  const el=document.getElementById("maptable");
+  el.innerHTML=map.size===0?"<div><span>-</span><span>-</span></div>":[...map.entries()].map(([o,a])=>`<div><span>${escapeHtml(o)}</span><span>${escapeHtml(a)}</span></div>`).join("");
+}
+
+let lastText="",lastWb=null;
+function processText(text){
+  const m=makeMasker();const out=m.run(text);lastText=out;
+  renderSummary(m.counts);renderMap(m.map);
+  let hl=escapeHtml(out);
+  for(const a of new Set(m.map.values())){hl=hl.split(escapeHtml(a)).join(`<mark>${escapeHtml(a)}</mark>`);}
+  document.getElementById("preview").innerHTML=`<pre>${hl}</pre>`;
+  document.getElementById("download").style.display="none";document.getElementById("copy").style.display="";
+  renderResult();
+  const total=Object.values(m.counts).reduce((a,b)=>a+b,0);
+  log("mask_run",{mode:"text",len:text.length,counts:m.counts,real:total>0});
+}
+function processWorkbook(wb,name){
+  const m=makeMasker();
+  wb.SheetNames.forEach(sn=>{const ws=wb.Sheets[sn];Object.keys(ws).forEach(addr=>{
+    if(addr[0]==="!")return;const cell=ws[addr];
+    if(cell&&typeof cell.v==="string"){const nv=m.run(cell.v);cell.v=nv;cell.w=nv;}
+  });});
+  lastWb=wb;renderSummary(m.counts);renderMap(m.map);
+  const ws=wb.Sheets[wb.SheetNames[0]];
+  const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:""}).slice(0,30);
+  const aliases=new Set(m.map.values());
+  const tbl=document.createElement("table");tbl.className="xl";
+  rows.forEach((r,i)=>{const tr=document.createElement("tr");
+    r.forEach(c=>{const cell=document.createElement(i===0?"th":"td");
+      let v=escapeHtml(String(c));
+      for(const a of aliases){if(v.includes(escapeHtml(a)))v=v.split(escapeHtml(a)).join(`<mark>${escapeHtml(a)}</mark>`);}
+      cell.innerHTML=v;tr.appendChild(cell);});tbl.appendChild(tr);});
+  const pv=document.getElementById("preview");pv.innerHTML="";pv.appendChild(tbl);
+  const dl=document.getElementById("download");dl.style.display="";dl.dataset.name=(name||"masked").replace(/\.(xlsx|xls)$/i,"")+"_가명.xlsx";
+  document.getElementById("copy").style.display="none";
+  renderResult();
+  const total=Object.values(m.counts).reduce((a,b)=>a+b,0);
+  log("mask_run",{mode:"xlsx",counts:m.counts,real:total>0});
+}
+function readFile(file){const r=new FileReader();r.onload=e=>{const wb=XLSX.read(e.target.result,{type:"array"});processWorkbook(wb,file.name);};r.readAsArrayBuffer(file);}
+function sampleWorkbook(){
+  const data=[
+    ["성명","주민번호","연락처","사업자번호","기본급","연장수당","지급계좌"],
+    ["김민수","900101-1234567","010-1234-5678","123-45-67890",3200000,180000,"110-234-567890"],
+    ["이서연","880315-2345678","010-2345-6789","234-56-78901",2800000,120000,"301-11-223344"],
+    ["박지훈","920722-1456789","010-3456-7890","123-45-67890",3500000,0,"110-234-567890"],
+    ["최유나","950210-2567890","010-4567-8901","345-67-89012",2600000,95000,"333-02-998877"]
+  ];
+  const ws=XLSX.utils.aoa_to_sheet(data);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"급여대장");return wb;
+}
+const SAMPLE_TEXT="김민수(900101-1234567) 대표님께 급여 3,200,000원을 지급했습니다. 거래처는 (주)한빛상사(123-45-67890)이고, 담당자 이서연 과장(010-2345-6789, lee@hanbit.co.kr)에게 계좌 110-234-567890으로 송금 예정입니다.";
+
+/* ============ 바인딩 ============ */
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
+  document.querySelectorAll(".panel").forEach(x=>x.classList.remove("on"));
+  t.classList.add("on");document.getElementById("panel-"+t.dataset.tab).classList.add("on");
+  document.getElementById("result").classList.remove("on");log("tab",{tab:t.dataset.tab});
+});
+const drop=document.getElementById("drop"),file=document.getElementById("file");
+drop.onclick=()=>file.click();
+drop.ondragover=e=>{e.preventDefault();drop.classList.add("hover")};
+drop.ondragleave=()=>drop.classList.remove("hover");
+drop.ondrop=e=>{e.preventDefault();drop.classList.remove("hover");if(e.dataTransfer.files[0])readFile(e.dataTransfer.files[0]);};
+file.onchange=e=>{if(e.target.files[0])readFile(e.target.files[0]);};
+document.getElementById("sample").onclick=e=>{e.preventDefault();log("sample",{mode:"xlsx"});processWorkbook(sampleWorkbook(),"샘플_급여대장.xlsx");};
+document.getElementById("runText").onclick=()=>{const v=document.getElementById("ta").value.trim();if(!v)return;processText(v);};
+document.getElementById("sampleText").onclick=()=>{document.getElementById("ta").value=SAMPLE_TEXT;log("sample",{mode:"text"});processText(SAMPLE_TEXT);};
+document.getElementById("download").onclick=function(){if(!lastWb)return;XLSX.writeFile(lastWb,this.dataset.name||"masked_가명.xlsx");log("download",{});};
+document.getElementById("copy").onclick=()=>{navigator.clipboard.writeText(lastText);const b=document.getElementById("copy");b.textContent="복사됨 ✓";setTimeout(()=>b.textContent="가명 텍스트 복사",1500);log("copy",{});};
+document.getElementById("sendEmail").onclick=()=>{
+  const v=document.getElementById("email").value.trim();
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){document.getElementById("email").focus();return;}
+  log("email",{});
+  document.getElementById("thanks").style.display="block";
+  document.getElementById("email").value="";document.getElementById("email").disabled=true;document.getElementById("sendEmail").disabled=true;
+};
+</script>
+</body>
+</html>
