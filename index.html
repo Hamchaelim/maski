@@ -4,9 +4,11 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'; worker-src 'none'" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>가리고 — AI는 쓰고 싶고, 유출은 겁나는 당신에게</title>
-<meta name="description" content="전문직 사무소를 위한 로컬 가명 처리 도구 가리고. 고객 식별정보를 가명으로 바꾸고, 업무 내용은 그대로 이어가는 사용 흐름을 확인하세요." />
+<title>마스킷 maskit — 고객 정보는 지키고, AI 업무는 간편하게</title>
+<meta name="description" content="전문직 사무소를 위한 로컬 가명 처리 도구 마스킷. 고객 식별정보를 가명으로 바꾸고, 업무 내용은 그대로 이어가는 사용 흐름을 확인하세요." />
 <link rel="stylesheet" href="light.css?v=1" />
+<link rel="stylesheet" href="maskit.css?v=20261106" />
+<meta name="theme-color" content="#172554" />
 </head>
 <body>
 
@@ -16,29 +18,28 @@
 
   <div class="wrap">
     <div class="nav">
-      <div class="brand"><span class="mk">가</span>가리고</div>
-      <div class="nav-right"><div class="navtag">세무 · 노무 · 법률 사무소를 위한 가리고</div><a class="nav-link" href="#demo">사용 흐름 살펴보기</a></div>
+      <a class="brand" href="#" aria-label="마스킷 홈"><span class="logo-crop"><img src="assets/maskit-logo.png" alt="maskit" width="2048" height="2048" /></span></a>
+      <div class="nav-right"><div class="navtag">세무 · 노무 · 법률 사무소를 위한 마스킷</div><a class="nav-link" href="#demo">사용 흐름 살펴보기</a></div>
     </div>
 
     <div class="hero">
       <div class="heroText">
         <span class="eyebrow">PRIVATE BY DESIGN</span>
         <h1 id="headline">AI에 보내기 전,<br><span class="g">고객 정보는</span><br>내 컴퓨터에.</h1>
-        <p class="lead">이름과 식별번호는 가명으로, 금액과 사실관계는 그대로. AI로 작성하는 업무에도 고객 정보는 소중하니까.</p><div class="row"><a class="btn primary" href="#demo">가리고 시작하기</a><a class="btn ghost" href="#local-principle">로컬 처리 원칙</a></div>
+        <p class="lead">이름과 식별번호는 가명으로, 금액과 사실관계는 그대로. AI로 작성하는 업무에도 고객 정보는 소중하니까.</p><div class="row"><a class="btn primary" href="#demo">마스킷 시작하기</a><a class="btn ghost" href="#local-principle">로컬 처리 원칙</a></div>
       </div>
 
-      <div class="stack" aria-hidden="true">
-        <div class="visual-orbit"></div>
-        <div class="visual-window">
-          <div class="visual-bar"><i></i><i></i><i></i><span>내 컴퓨터 · 문서 정리</span></div>
-          <div class="visual-heading">고객 정보는 가명으로 바꿔요.</div>
-          <div class="visual-row"><span>성명</span><span><del>김민수</del><b>[이름_1]</b></span></div>
-          <div class="visual-row"><span>연락처</span><span><del>010-0000-0001</del><b>[전화_1]</b></span></div>
-          <div class="visual-row"><span>기본급</span><strong>3,200,000원</strong></div>
-          <div class="visual-rule"></div>
-          <div class="visual-caption"><i></i>금액과 업무 내용은 그대로</div>
+      <div class="brand-visual" aria-label="마스킷, 고객 식별정보를 가명으로 바꾸는 문서 업무 흐름">
+        <div class="brand-orbit" aria-hidden="true"></div>
+        <span class="logo-crop hero-logo"><img src="assets/maskit-logo.png" alt="maskit" width="2048" height="2048" fetchpriority="high" /></span>
+        <div class="brand-product" aria-hidden="true">
+          <div class="brand-product-header"><span>고객 문서 · 가명 처리</span><b>내 기기에서</b></div>
+          <div class="brand-product-row"><span>성명</span><span><del>김민수</del> → <span class="brand-token">[이름_1]</span></span></div>
+          <div class="brand-product-row"><span>연락처</span><span class="brand-token">[전화_1]</span></div>
+          <div class="brand-product-row"><span>기본급</span><strong>3,200,000원</strong></div>
+          <p class="brand-product-caption"><span></span>식별정보는 가명으로, 업무 내용은 그대로</p>
         </div>
-        <div class="shield-badge"><svg viewBox="0 0 48 48" fill="none"><path d="M24 4 40 10v12c0 10-8 17-16 22C16 39 8 32 8 22V10L24 4Z" fill="#e5f1ff" stroke="currentColor" stroke-width="2.4"/><path d="m16 24 6 6 11-13" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <span class="brand-caption">KEEP THE CONTEXT. MASK THE DETAILS.</span>
       </div>
     </div>
   </div>
@@ -67,7 +68,7 @@
 <div class="demo-controls"><div><button class="btn primary" id="advance">가명 처리</button><button class="btn ghost" id="restart">처음부터</button></div><p id="progress" role="status"></p></div>
 <div class="capture"><h3>전체 문서 처리와 원문 복원까지</h3><p>고객 식별정보를 구분하고, 가명으로 작성한 초안에 원래 정보를 되돌리는 흐름. 문서 작성의 시작부터 마무리까지 이어집니다.</p><span class="doc-badge">원본 확인 → 가명 처리 → 초안 확인 → 원문 복원</span></div>
 </div></section>
-<section class="how" id="local-principle"><div class="wrap"><h2>고객 정보는 신중하게. 업무는 간결하게.</h2><p class="lead2">가리고가 중요하게 생각하는 세 가지 원칙입니다.</p>
+<section class="how" id="local-principle"><div class="wrap"><h2>고객 정보는 신중하게. 업무는 간결하게.</h2><p class="lead2">마스킷이 중요하게 생각하는 세 가지 원칙입니다.</p>
 <div class="cards"><div class="c"><div class="n">01 · 제품 설계 원칙</div><h4>원문은 사용자 기기에서 처리</h4><p>고객 식별정보와 치환표는 사용자 기기에 두는 로컬 처리를 설계 원칙으로 삼습니다.</p></div>
 <div class="c"><div class="n">02 · AI에 보내는 단계</div><h4>가명 처리 후 사용자가 검토</h4><p>사용자가 누락 여부와 문서 맥락을 검토한 뒤 가명 처리된 내용만 AI에 전달하는 흐름입니다. 이 페이지는 AI 서비스에 연결되지 않습니다.</p></div>
 <div class="c"><div class="n">03 · 사용자 확인</div><h4>내용을 확인하고 다음 단계로</h4><p>가명 처리된 문서와 작성된 초안을 단계별로 확인합니다. 외부 AI에 자료를 전달하기 전에는 식별정보의 누락과 문서 맥락을 직접 검토해야 합니다.</p></div></div>
@@ -76,11 +77,13 @@
 </div></section>
 <footer>
   <div class="wrap">
+    <span class="logo-crop footer-logo"><img src="assets/maskit-logo.png" alt="maskit" width="2048" height="2048" loading="lazy" /></span>
+    <div class="footer-name">마스킷 · 전문직 사무소를 위한 문서 가명 처리</div>
     화면은 가상 문서와 미리 작성한 답변으로 사용 흐름을 안내합니다. 실제 파일 처리·AI 호출·자동 복원 서비스는 연결되어 있지 않습니다.<br>
-    가천대학교 코코네스쿨 창업 과정 · 전문직 사무소의 AI 활용 현황 조사 · 드림즈 · 가리고
+    가천대학교 코코네스쿨 창업 과정 · 전문직 사무소의 AI 활용 현황 조사 · 드림즈 · 마스킷
   </div>
 </footer>
 
-<script src="demo.js?v=light-20261106"></script>
+<script src="demo.js?v=maskit-20261106"></script>
 </body>
 </html>
