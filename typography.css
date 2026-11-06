@@ -1,0 +1,41 @@
+@font-face{font-family:SUIT;font-weight:100 900;font-style:normal;font-display:swap;src:url('assets/fonts/SUIT-Variable.woff2') format('woff2')}
+@font-face{font-family:Poppins;font-weight:800;font-style:normal;font-display:swap;src:url('assets/fonts/Poppins-ExtraBold.ttf') format('truetype')}
+/* Rounded geometric display type with a consistent Korean UI family. */
+body,button,input,select,textarea,.document-card pre{font-family:SUIT,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;font-synthesis:none}
+body{font-weight:450;letter-spacing:-.018em}
+h1,h2,h3,h4{font-family:Poppins,SUIT,sans-serif;font-weight:800;letter-spacing:-.035em}
+h1{font-size:clamp(38px,4.2vw,54px);line-height:1.24;letter-spacing:-.04em}
+.lead{font-size:16px;font-weight:500;line-height:1.75;letter-spacing:-.025em;max-width:35ch}
+.tool h2,.how h2{font-size:clamp(25px,2.9vw,34px);line-height:1.4}
+.demo-lead,.how .lead2{font-size:15px;font-weight:450;line-height:1.75}
+.btn{font-size:14px;font-weight:750;letter-spacing:-.02em}
+.nav-right .btn{font-size:13px}.navtag{font-size:12px;font-weight:500}
+.tab{font-size:14px;font-weight:550}.tab.on{font-weight:750}
+.steps li{font-size:13px;font-weight:550}.steps li.active{font-weight:750}
+.document-card h3{font-size:21px;font-weight:750;letter-spacing:-.03em}
+.document-card pre{font-size:14px;font-weight:450;line-height:1.85;letter-spacing:-.015em}
+.doc-label{font-size:12px;font-weight:550}.doc-badge{font-size:11px;font-weight:650}
+.doc-foot{font-size:12px;line-height:1.75}.demo-controls p{font-size:12px}
+.capture h3{font-size:23px;font-weight:800}.capture p{font-size:14px;line-height:1.8}
+.c .n{font-size:11px;font-weight:700}.c h4{font-size:19px;line-height:1.5}.c p{font-size:14px;line-height:1.8}
+.faq{font-size:14px;line-height:1.8}.faq summary{font-weight:650}.faq p{font-size:13px}
+.eyebrow,.lead-kicker{font-size:11px;letter-spacing:.065em;font-weight:750}
+.tk{font-size:11px}.tv{font-size:14px;font-weight:650}
+.brand-product-header{font-size:11px}.brand-product-row{font-size:14px}.brand-token{font-size:12px;font-weight:750}
+.brand-product-row del{font-size:12px}.brand-product-caption{font-size:11px}.brand-caption{letter-spacing:.055em}
+.lead-dialog h2{font-size:29px;font-weight:800;letter-spacing:-.035em}.lead-intro{font-size:14px;line-height:1.75}
+.lead-field label{font-size:13px;font-weight:650}.lead-field label span{font-size:11px}
+.lead-field input,.lead-field select{font-size:15px;font-weight:450}.lead-form .submit-lead{font-size:15px;font-weight:750}
+.lead-check,.lead-privacy{font-size:12px}.lead-status{font-size:13px}.lead-unavailable{font-size:13px}
+.signup-note{font-size:12px}.footer-name{font-size:12px;font-weight:650}footer{font-size:11px;line-height:1.8}
+@media(max-width:760px){
+ h1{font-size:36px;line-height:1.25;letter-spacing:-.04em}
+ .lead{font-size:15px;line-height:1.75;max-width:34ch}
+ .tool h2,.how h2{font-size:26px;line-height:1.4}.demo-lead,.how .lead2{font-size:14px}
+ .nav-right .btn{font-size:11px;padding:9px 10px}.btn{font-size:13px}.lead-actions .btn{font-size:13px}
+ .tab{font-size:12px;padding:10px 12px}.steps li{font-size:11px}
+ .document-card h3{font-size:19px}.document-card pre{font-size:13px;line-height:1.85}
+ .capture h3{font-size:21px}.capture p{font-size:13px}.capture .doc-badge{font-size:10px}
+ .c h4{font-size:18px}.c p,.faq{font-size:13px}.lead-dialog h2{font-size:26px}
+ .lead-field input,.lead-field select{font-size:16px}.tv{font-size:13px}
+}

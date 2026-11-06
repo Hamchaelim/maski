@@ -43,3 +43,7 @@ GitHub 저장소와 사이트 이름은 **maski**, 서비스 표기는 **마스�
 ## 팀
 
 가천코코네스쿨(GCS) 9기 · 드림즈 — 남성수 · 임아메드 · 함채림
+
+## 글꼴
+
+한글 UI·본문은 SUIT Variable, 영문 제목은 Poppins ExtraBold를 사용합니다. 폰트는 assets/fonts에서 직접 제공하며 외부 폰트 서버를 호출하지 않습니다. 각 폰트의 SIL Open Font License는 같은 폴더에 포함했습니다.
